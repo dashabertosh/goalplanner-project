@@ -1,33 +1,35 @@
 package by.epam.goalplanner.beans;
 
+import java.util.Date;
+
 public class Task {
 
     private long id;
     private String name_task;
     private String description_task;
-    private long date;
+    private Date date;
     private byte isDone;
-    private long goals_ID;
+    private long goal_id;
 
     public Task() {
 
     }
 
-    public Task(long id, String name_task, String description_task, long date, byte isDone, long goals_ID) {
+    public Task(long id, String name_task, String description_task, Date date, byte isDone, long goals_ID) {
         this.id = id;
         this.name_task = name_task;
         this.description_task = description_task;
         this.date = date;
-        this.goals_ID = goals_ID;
         this.isDone = isDone;
+        this.goal_id = goals_ID;
     }
 
     public long getGoals_ID() {
-        return goals_ID;
+        return goal_id;
     }
 
     public void setGoals_ID(long goals_ID) {
-        this.goals_ID = goals_ID;
+        this.goal_id = goals_ID;
     }
 
     public long getId() {
@@ -54,12 +56,28 @@ public class Task {
         this.description_task = description_task;
     }
 
-    public long getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(long date) {
+    public void setDate(Date date) {
         this.date = date;
+    }
+
+    public byte getIsDone() {
+        return isDone;
+    }
+
+    public void setIsDone(byte isDone) {
+        this.isDone = isDone;
+    }
+
+    public long getGoal_id() {
+        return goal_id;
+    }
+
+    public void setGoal_id(long goal_id) {
+        this.goal_id = goal_id;
     }
 
     public int isDone() {
@@ -78,7 +96,7 @@ public class Task {
                 ", description_task='" + description_task + '\'' +
                 ", date=" + date +
                 ", isDone=" + isDone +
-                ", goals_ID=" + goals_ID +
+                ", goal_id=" + goal_id +
                 '}';
     }
 }

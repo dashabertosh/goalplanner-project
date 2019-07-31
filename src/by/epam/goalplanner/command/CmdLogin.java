@@ -26,10 +26,10 @@ public class CmdLogin implements Cmd {
     public CmdResult execute(HttpServletRequest req, HttpServletResponse res) throws SQLException {
         CmdResult result;
         if (req.getMethod().equalsIgnoreCase("POST")) {
-            String name = req.getParameter(LOGIN);
+            String login = req.getParameter(LOGIN);
             String password = req.getParameter(PASSWORD);
 
-            Optional<User> user = userService.login(name, password);
+            Optional<User> user = userService.login(login, password);
 
             HttpSession session = req.getSession();
             if (user.isPresent()) {

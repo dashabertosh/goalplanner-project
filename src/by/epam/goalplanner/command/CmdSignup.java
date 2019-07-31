@@ -26,8 +26,8 @@ public class CmdSignup implements Cmd {
 
             //validation
 
-            boolean user1 = userService.create(login, password, name);
-            if (user1) {
+            boolean isUser = userService.create(login, password, name);
+            if (isUser) {
                 Optional<User> user = userService.login(login, password);
                 req.getSession().setAttribute("user", user);
             }

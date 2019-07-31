@@ -1,6 +1,7 @@
 package by.epam.goalplanner.beans;
 
 
+import java.util.Date;
 import java.util.List;
 
 public class Goal {
@@ -8,8 +9,8 @@ public class Goal {
     private long id;
     private String name;
     private String description;
-    private long beginDate;
-    private long endDate;
+    private Date beginDate;
+    private Date endDate;
     private long userId;
     private long type_id;
     private List<Task> tasks;
@@ -18,13 +19,13 @@ public class Goal {
 
     }
 
-    public Goal(long id, String name, String description, long beginDate, long endDate, long user, long type_id) {
+    public Goal(long id, String name, String description, Date beginDate, Date endDate, long userId, long type_id) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.beginDate = beginDate;
         this.endDate = endDate;
-        this.userId = user;
+        this.userId = userId;
         this.type_id = type_id;
     }
 
@@ -68,19 +69,19 @@ public class Goal {
         this.description = description;
     }
 
-    public long getBeginDate() {
+    public Date getBeginDate() {
         return beginDate;
     }
 
-    public void setBeginDate(long beginDate) {
+    public void setBeginDate(Date beginDate) {
         this.beginDate = beginDate;
     }
 
-    public long getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(long endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -101,6 +102,8 @@ public class Goal {
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
                 ", userId=" + userId +
+                ", type_id=" + type_id +
+                ", tasks=" + tasks +
                 '}';
     }
 }

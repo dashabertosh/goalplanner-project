@@ -6,6 +6,7 @@ import by.epam.goalplanner.dao.GoalDao;
 import by.epam.goalplanner.pool.ProxyConnection;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,13 +21,17 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     private static final String UPDATE_GOAL = "UPDATE `goal` SET `name` = '?', `description` = ?, " +
             "`begin_date` = ?, `end_date` = ?, `user_id` = ?, `type_id` = ? WHERE `goal`.`id` = ?";
     private static final String DELETE_GOAL = "DELETE FROM `goal` WHERE `goal`.`id` = ?";
+    private static final String GET_ALL_GOALS  = "SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
+            " `user_id`, `type_id` FROM `goal`";
+    private static final String GET_GOALS_BY_NAME  = "SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
+            " `user_id`, `type_id` FROM `goal` WHERE `name` = ?";
 
     public GoalDaoImpl(ProxyConnection connection, Builder<Goal> builder) {
         super(connection, builder);
     }
 
     @Override
-    public boolean create(String name, String description, long beginDate, long endDate, long userId, long typeId) {
+    public boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) {
         return executeUpdate(CREATE_GOAL, name, description, beginDate, endDate, userId, typeId);
     }
 
@@ -48,12 +53,22 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     }
 
     @Override
+    public List<Goal> getAll() {
+        return executeQuery(GET_ALL_GOALS);
+    }
+
+    @Override
     public List<Goal> getAll(String sql) {
         return executeQuery(GET_ALL_GOALS_WHERE, sql);
     }
 
     @Override
-    public List<Goal> findGoalByDate(long beginDate, long endDate) {
+    public List<Goal> findGoalByDate(Date beginDate, Date endDate) {
         return executeQuery(GET_GOALS_BY_DATE, beginDate, endDate);
+    }
+
+    @Override
+    public List<Goal> findGoalByName(String name) {
+        return executeQuery(GET_GOALS_BY_NAME, name);
     }
 }

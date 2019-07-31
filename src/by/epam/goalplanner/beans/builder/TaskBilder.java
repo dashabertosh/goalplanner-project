@@ -4,6 +4,7 @@ import by.epam.goalplanner.beans.Task;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class TaskBilder implements Builder<Task> {
     private static final String ID_TASK = "id";
@@ -19,7 +20,7 @@ public class TaskBilder implements Builder<Task> {
         long id = resultSet.getLong(ID_TASK);
         String name = resultSet.getString(NAME_TASK);
         String description = resultSet.getString(DESCRIPTION);
-        long date = resultSet.getLong(DATE);
+        Date date = resultSet.getDate(DATE);
         byte isDone = resultSet.getByte(IS_DONE);
         long goal_id = resultSet.getLong(GOAL_ID);
         return new Task(id, name, description, date, isDone, goal_id);

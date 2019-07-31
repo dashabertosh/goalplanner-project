@@ -8,7 +8,5 @@ public interface BaseDao<Type> {
     Type read(long id);
     List<Type> getAll(String sql);
 
-    default List<Type> getAll(){
-        return getAll("");
-    }
+    List<Type> getAll();
 }

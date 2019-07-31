@@ -7,9 +7,20 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-                 <a class="nav-item nav-link" >Сбросить</a>
-                 <a class="nav-item nav-link" href="do?command=signup">Регистрация</a>
-                 <a class="nav-item nav-link" href="do?command=login">Авторизация</a>
+            <c:choose>
+                <c:when test="${user==null}">
+<%--                    <a class="nav-item nav-link" href="do?command=reset">Сбросить</a>--%>
+                    <a class="nav-item nav-link" href="do?command=signup">Регистрация</a>
+                    <a class="nav-item nav-link" href="do?command=login">Авторизация</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="nav-item nav-link" href="do?command=profile">Профиль</a>
+                    <a class="nav-item nav-link" href="do?command=creategoal">Создать цель</a>
+                    <a class="nav-item nav-link" href="do?command=createtask">Создать задание</a>
+<%--                    <a class="nav-item nav-link" href="do?command=EditUsers">Админка</a>--%>
+<%--                    <a class="nav-item nav-link" href="do?command=Logout">Выход</a>--%>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 </nav>
