@@ -5,31 +5,47 @@ import java.util.Date;
 public class Task {
 
     private long id;
-    private String name_task;
-    private String description_task;
+    private String name;
+    private String description;
     private Date date;
     private byte isDone;
-    private long goal_id;
+    private long goalId;
 
     public Task() {
 
     }
 
-    public Task(long id, String name_task, String description_task, Date date, byte isDone, long goals_ID) {
+    public Task(long id, String name, String description, Date date, byte isDone, long goalId) {
         this.id = id;
-        this.name_task = name_task;
-        this.description_task = description_task;
+        this.name = name;
+        this.description = description;
         this.date = date;
         this.isDone = isDone;
-        this.goal_id = goals_ID;
+        this.goalId = goalId;
     }
 
-    public long getGoals_ID() {
-        return goal_id;
+    public String getName() {
+        return name;
     }
 
-    public void setGoals_ID(long goals_ID) {
-        this.goal_id = goals_ID;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public long getGoalId() {
+        return goalId;
+    }
+
+    public void setGoalId(long goalId) {
+        this.goalId = goalId;
     }
 
     public long getId() {
@@ -38,22 +54,6 @@ public class Task {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getName_task() {
-        return name_task;
-    }
-
-    public void setName_task(String name_task) {
-        this.name_task = name_task;
-    }
-
-    public String getDescription_task() {
-        return description_task;
-    }
-
-    public void setDescription_task(String description_task) {
-        this.description_task = description_task;
     }
 
     public Date getDate() {
@@ -72,14 +72,6 @@ public class Task {
         this.isDone = isDone;
     }
 
-    public long getGoal_id() {
-        return goal_id;
-    }
-
-    public void setGoal_id(long goal_id) {
-        this.goal_id = goal_id;
-    }
-
     public int isDone() {
         return isDone;
     }
@@ -92,11 +84,11 @@ public class Task {
     public String toString() {
         return "Task{" +
                 "id=" + id +
-                ", name_task='" + name_task + '\'' +
-                ", description_task='" + description_task + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 ", date=" + date +
                 ", isDone=" + isDone +
-                ", goal_id=" + goal_id +
+                ", goalId=" + goalId +
                 '}';
     }
 }

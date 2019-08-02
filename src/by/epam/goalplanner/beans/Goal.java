@@ -12,21 +12,21 @@ public class Goal {
     private Date beginDate;
     private Date endDate;
     private long userId;
-    private long type_id;
+    private long typeId;
     private List<Task> tasks;
 
     public Goal() {
 
     }
 
-    public Goal(long id, String name, String description, Date beginDate, Date endDate, long userId, long type_id) {
+    public Goal(long id, String name, String description, Date beginDate, Date endDate, long userId, long typeId) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.userId = userId;
-        this.type_id = type_id;
+        this.typeId = typeId;
     }
 
     public List<Task> getTasks() {
@@ -85,12 +85,12 @@ public class Goal {
         this.endDate = endDate;
     }
 
-    public long getType_id() {
-        return type_id;
+    public long getTypeId() {
+        return typeId;
     }
 
-    public void setType_id(long type_id) {
-        this.type_id = type_id;
+    public void setTypeId(long typeId) {
+        this.typeId = typeId;
     }
 
     @Override
@@ -102,7 +102,7 @@ public class Goal {
                 ", beginDate=" + beginDate +
                 ", endDate=" + endDate +
                 ", userId=" + userId +
-                ", type_id=" + type_id +
+                ", typeId=" + typeId +
                 ", tasks=" + tasks +
                 '}';
     }

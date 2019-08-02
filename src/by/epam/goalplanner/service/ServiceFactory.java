@@ -6,11 +6,18 @@ import by.epam.goalplanner.service.impl.TaskServiceImpl;
 import by.epam.goalplanner.service.impl.TypeServiceImpl;
 import by.epam.goalplanner.service.impl.UserServiceImpl;
 
-public class ServiceFactory {
-    private final DaoFactory daoFactory;
 
-    public ServiceFactory(DaoFactory daoFactory) {
-        this.daoFactory = daoFactory;
+public class ServiceFactory {
+
+    private final static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
+
+    private DaoFactory daoFactory = DaoFactory.getInstance();
+
+    private ServiceFactory() {
+    }
+
+    public static ServiceFactory getInstance() {
+       return SERVICE_FACTORY;
     }
 
     public UserService createUserService() {

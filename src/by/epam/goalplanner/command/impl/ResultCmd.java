@@ -1,10 +1,10 @@
-package by.epam.goalplanner.command;
+package by.epam.goalplanner.command.impl;
 
-public class CmdResult {
+public class ResultCmd {
     private final String url;
     private final boolean forward;
 
-    public CmdResult(String url, boolean forward) {
+    public ResultCmd(String url, boolean forward) {
         this.url = url;
         this.forward = forward;
     }

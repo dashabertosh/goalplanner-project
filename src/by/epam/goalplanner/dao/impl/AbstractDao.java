@@ -2,6 +2,8 @@ package by.epam.goalplanner.dao.impl;
 
 import by.epam.goalplanner.beans.builder.Builder;
 import by.epam.goalplanner.dao.BaseDao;
+import by.epam.goalplanner.exception.DaoException;
+import by.epam.goalplanner.pool.ConnectionPool;
 import by.epam.goalplanner.pool.ProxyConnection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,20 +18,22 @@ import java.util.Optional;
 
 public abstract class AbstractDao<T> implements BaseDao<T> {
 
-    private  ProxyConnection connection;
+    private ProxyConnection connection = ConnectionPool.getInstance().getConnection();
     private Builder<T> builder;
 
-    public AbstractDao(ProxyConnection connection,Builder<T> builder) {
-        this.connection = connection;
+    AbstractDao(Builder<T> builder) {
         this.builder = builder;
     }
 
-    protected boolean executeUpdate(String sql, Object ... params) {
+    protected boolean executeUpdate(String sql, Object ... params) throws DaoException {
        try (PreparedStatement statement = connection.prepareStatement(sql)) {
            prepareStatement(statement, params);
            return(1 == statement.executeUpdate());
+
        } catch (SQLException e) {
-           return false;
+           throw new DaoException(e);
+       } finally {
+           ConnectionPool.getInstance().releaseConnection(connection);
        }
     }
 
@@ -41,12 +45,15 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
                     return generatedKeys.getLong(1);
                 }
             }
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return -1;
     }
 
     protected List<T> executeQuery(String query, Object... params) {
         List<T> resultList = new ArrayList<>();
+
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, params);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -59,6 +66,8 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
             }
         } catch (SQLException e) {
             //logger
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
         }
         return resultList;
     }
@@ -74,7 +83,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
     }
 
 
-    private void prepareStatement(PreparedStatement statement, Object... params) throws SQLException {
+    private void prepareStatement(PreparedStatement statement, Object... params) {
         try {
             for (int i = 1; i < params.length + 1; i++) {
                 statement.setObject(i, params[i - 1]);

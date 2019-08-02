@@ -2,6 +2,7 @@ package by.epam.goalplanner.service.impl;
 
 import by.epam.goalplanner.beans.Goal;
 import by.epam.goalplanner.dao.GoalDao;
+import by.epam.goalplanner.exception.DaoException;
 import by.epam.goalplanner.service.GoalService;
 
 import java.util.Date;
@@ -15,7 +16,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public boolean create(String name, String description, Date beginDate, Date endDate, long user_id, long type_id) {
+    public boolean create(String name, String description, Date beginDate, Date endDate, long user_id, long type_id) throws DaoException {
         return goalDao.create(name, description, beginDate, endDate, user_id, type_id);
     }
 
@@ -35,12 +36,12 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public boolean update(Goal goal) {
+    public boolean update(Goal goal) throws DaoException {
         return goalDao.update(goal);
     }
 
     @Override
-    public boolean delete(Goal goal) {
+    public boolean delete(Goal goal) throws DaoException {
         return goalDao.delete(goal);
     }
 }

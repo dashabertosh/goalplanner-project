@@ -30,15 +30,15 @@ public class ConnectionPool {
         try {
             for (int i = 0; i < POOL_SIZE; i++) {
                 Connection connection = creator.createConnection();
-                ProxyConnection pConnection = new ProxyConnection(connection);
-                openConnection.add(pConnection);
+                ProxyConnection proxyConnectionConnection = new ProxyConnection(connection);
+                openConnection.add(proxyConnectionConnection);
             }
         } catch (SQLException e) {
             e.getStackTrace();
         }
     }
 
-    public static ConnectionPool getInstance()  {
+    public static ConnectionPool getInstance() {
         if (!create.get()) {
             try {
                 lock.lock();

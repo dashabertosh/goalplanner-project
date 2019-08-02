@@ -1,11 +1,12 @@
-package by.epam.goalplanner.command;
+package by.epam.goalplanner.command.impl;
 
 import by.epam.goalplanner.beans.User;
+import by.epam.goalplanner.constant.VariableConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class Util {
+class VerificationUser {
 
     static boolean checkUser(HttpServletRequest req) {
         return findUser(req) != null;
@@ -14,12 +15,8 @@ public class Util {
     static User findUser(HttpServletRequest req) {
         HttpSession session = req.getSession(false);
         if (session != null) {
-            Object oUser = session.getAttribute("user");
-            if (oUser != null) {
-                return (User) oUser;
-            }
+            return (User) session.getAttribute(VariableConstant.USER.getName());
         }
         return null;
     }
-
 }

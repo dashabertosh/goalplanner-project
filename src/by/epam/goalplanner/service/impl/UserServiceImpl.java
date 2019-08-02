@@ -3,6 +3,7 @@ package by.epam.goalplanner.service.impl;
 
 import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.dao.UserDao;
+import by.epam.goalplanner.exception.DaoException;
 import by.epam.goalplanner.service.UserService;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean create(String login, String password, String name) {
+    public boolean create(String login, String password, String name) throws DaoException {
         return userDao.create(login, password, name);
     }
 

@@ -2,6 +2,7 @@ package by.epam.goalplanner.service.impl;
 
 import by.epam.goalplanner.beans.Task;
 import by.epam.goalplanner.dao.TaskDao;
+import by.epam.goalplanner.exception.DaoException;
 import by.epam.goalplanner.service.TaskService;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public boolean delete(Task task) {
+    public boolean delete(Task task) throws DaoException {
         return taskDao.delete(task);
     }
 

@@ -11,12 +11,12 @@ public class BuilderFactory {
     }
 
     public Builder<Task> createTaskBuilder() {
-        return new TaskBilder();
+        return new TaskBuilder();
     }
 
     public Builder<Goal> createGoalBuilder() {
         return new GoalBuilder();
     }
 
-    public Builder<Type> createTypeBuilder() { return new TypeBuilder();}
+    public Builder<Type> createTypeBuilder() { return new TypeBuilder(); }
 }

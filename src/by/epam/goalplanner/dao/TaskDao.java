@@ -1,6 +1,7 @@
 package by.epam.goalplanner.dao;
 
 import by.epam.goalplanner.beans.Task;
+import by.epam.goalplanner.exception.DaoException;
 
 import java.util.Date;
 import java.util.List;
@@ -8,5 +9,5 @@ import java.util.List;
 public interface TaskDao extends BaseDao<Task> {
     List<Task> findTasksByDate(long date);
 
-    boolean create(String name, String description, Date date, byte done, long goal_id);
+    boolean create(String name, String description, Date date, byte done, long goal_id) throws DaoException;
 }

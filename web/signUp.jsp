@@ -32,7 +32,7 @@
 <%@ include file="include/head.jsp" %>
 <div class="container">
     <%@ include file="include/menu.jsp" %>
-    <form class="form-horizontal" action="do?command=signup" method="POST">
+    <form class="form-horizontal" action="do?command=signUp" method="POST">
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">

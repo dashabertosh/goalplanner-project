@@ -1,12 +1,15 @@
 package by.epam.goalplanner.service;
 
-import by.epam.goalplanner.beans.Goal;
+
 import by.epam.goalplanner.beans.Type;
+import by.epam.goalplanner.exception.DaoException;
 
 import java.util.List;
 
-public interface TypeService extends Service<Type> {
-   boolean create(String name);
+public interface TypeService {
+    List<Type> findAll();
 
-   long findIdByName(String name);
+    boolean create(String name) throws DaoException;
+
+    long findIdByName(String name);
 }

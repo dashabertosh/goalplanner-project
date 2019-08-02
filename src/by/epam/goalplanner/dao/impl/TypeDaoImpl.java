@@ -2,55 +2,48 @@ package by.epam.goalplanner.dao.impl;
 
 import by.epam.goalplanner.beans.Type;
 import by.epam.goalplanner.beans.builder.Builder;
+import by.epam.goalplanner.constant.SqlConstant;
 import by.epam.goalplanner.dao.TypeDao;
-import by.epam.goalplanner.pool.ProxyConnection;
+import by.epam.goalplanner.exception.DaoException;
 
 import java.util.List;
 
 public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
-
-    private static final String SELECT_ALL_TYPES_WHERE = "SELECT `id`, `name_type` FROM `type` ?";
-    private static final String CREATE_TYPE = "INSERT INTO `type` (`name`) VALUES (?)";
-    private static final String UPDATE_TYPE = "UPDATE `type` SET `name` = ? WHERE `type`.`id` = ?";
-    private static final String DELETE_TYPE = "DELETE FROM `type` WHERE `type`.`id` = ?";
-    private static final String SELECT_ID_BY_NAME = "SELECT `id` FROM `type` WHERE `name` = ?";
-
-
-    public TypeDaoImpl(ProxyConnection connection, Builder<Type> builder) {
-        super(connection, builder);
+    public TypeDaoImpl(Builder<Type> builder) {
+        super(builder);
     }
 
     @Override
-    public boolean create(String name) {
-        return executeUpdate(CREATE_TYPE, name);
+    public boolean create(String name) throws DaoException {
+        return executeUpdate(SqlConstant.CREATE_TYPE.getName(), name);
     }
 
     @Override
-    public boolean update(Type type) {
-        return executeUpdate(UPDATE_TYPE, type.getName(), type.getId());
+    public boolean update(Type type) throws DaoException {
+        return executeUpdate(SqlConstant.UPDATE_TYPE.getName(), type.getName(), type.getId());
     }
 
     @Override
     public long findIdByName(String name) {
-        List<Type> type = executeQuery(SELECT_ID_BY_NAME, name);
+        List<Type> type = executeQuery(SqlConstant.SELECT_TYPE_ID_BY_NAME.getName(), name);
         return type.get(0).getId();
     }
 
     @Override
-    public boolean delete(Type type) {
-        return executeUpdate(DELETE_TYPE, type.getId());
+    public boolean delete(Type type) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_TYPE.getName(), type.getId());
     }
 
     @Override
     public Type read(long id) {
-        String sqlSuffix = String.format("WHERE id=%d", id);
+        String sqlSuffix = String.format(SqlConstant.WHERE_ID.getName(), id);
         List<Type> all = getAll(sqlSuffix);
         return all.size() > 0 ? all.get(0) : null;
     }
 
     @Override
     public List<Type> getAll(String sql) {
-        return executeQuery(SELECT_ALL_TYPES_WHERE, sql);
+        return executeQuery(SqlConstant.SELECT_ALL_TYPES_WHERE.getName(), sql);
     }
 
     @Override

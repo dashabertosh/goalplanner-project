@@ -2,6 +2,7 @@ package by.epam.goalplanner.service.impl;
 
 import by.epam.goalplanner.beans.Type;
 import by.epam.goalplanner.dao.TypeDao;
+import by.epam.goalplanner.exception.DaoException;
 import by.epam.goalplanner.service.TypeService;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public boolean create(String name) {
+    public boolean create(String name) throws DaoException {
         return typeDao.create(name);
     }
 

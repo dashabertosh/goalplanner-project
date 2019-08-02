@@ -1,66 +1,61 @@
 package by.epam.goalplanner.command;
 
-import by.epam.goalplanner.beans.Goal;
+import by.epam.goalplanner.command.impl.*;
 import by.epam.goalplanner.service.*;
 
-import javax.servlet.http.HttpServletRequest;
+public class FactoryCmd {
+    private final static FactoryCmd FACTORY_CMD = new FactoryCmd();
 
-public class CmdFactory {
-    private final ServiceFactory serviceFactory;
+    private FactoryCmd() {
+    }
 
-    public CmdFactory(ServiceFactory serviceFactory) {
-        this.serviceFactory = serviceFactory;
+    public static FactoryCmd getInstance() {
+        return FACTORY_CMD;
     }
 
     public Cmd create(String cmd) {
+        ServiceFactory serviceFactory = ServiceFactory.getInstance();
         Cmd command;
         if (cmd == null) {
             UserService userService = serviceFactory.createUserService();
-            return new CmdIndex(userService);
+            return new IndexCmd(userService);
         }
         switch (cmd) {
-            case CmdLogin.PAGE: {
+            case LoginCmd.PAGE: {
                 UserService userService = serviceFactory.createUserService();
-                command = new CmdLogin(userService);
+                command = new LoginCmd(userService);
                 break;
             }
-            case CmdSignup.PAGE: {
+            case SignUpCmd.PAGE: {
                 UserService userService = serviceFactory.createUserService();
-                command = new CmdSignup(userService);
+                command = new SignUpCmd(userService);
                 break;
             }
-            case CmdProfile.PAGE: {
+            case ProfileCmd.PAGE: {
                 UserService userService = serviceFactory.createUserService();
                 TaskService taskService = serviceFactory.createTaskService();
-                GoalService goalService = serviceFactory.createGoalService();
+                GoalService goalService = serviceFactory.createGoalService(); //
                 TypeService typeService = serviceFactory.createTypeService();
-                command = new CmdProfile(userService, goalService, taskService, typeService);
+                command = new ProfileCmd(userService, goalService, taskService, typeService);
                 break;
             }
-            case CmdCreateGoal.PAGE: {
+            case CreateGoalCmd.PAGE: {
                 TypeService typeService = serviceFactory.createTypeService();
                 GoalService goalService = serviceFactory.createGoalService();
-                command = new CmdCreateGoal(typeService, goalService);
+                command = new CreateGoalCmd(typeService, goalService);
                 break;
             }
-            case CmdCreateTask.PAGE: {
+            case CreateTaskCmd.PAGE: {
                 GoalService goalService = serviceFactory.createGoalService();
                 TaskService taskService = serviceFactory.createTaskService();
-                command = new CmdCreateTask(goalService, taskService);
+                command = new CreateTaskCmd(goalService, taskService);
                 break;
             }
             default: {
                 UserService userService = serviceFactory.createUserService();
-                return new CmdIndex(userService);
+                return new IndexCmd(userService);
             }
         }
         return command;
-    }
-
-    static String getString(HttpServletRequest req, String name, String pattern) {
-        String result = req.getParameter(name);
-        if (result.matches(pattern))
-            return result;
-        return null;
     }
 }

@@ -11,34 +11,38 @@ import by.epam.goalplanner.dao.impl.TaskDaoImpl;
 import by.epam.goalplanner.dao.impl.TypeDaoImpl;
 import by.epam.goalplanner.dao.impl.UserDaoImpl;
 
-import by.epam.goalplanner.pool.ProxyConnection;
 
 public class DaoFactory {
-    private final ProxyConnection connection;
-    private final BuilderFactory builderFactory;
+    private final static DaoFactory DAO_FACTORY = new DaoFactory();
 
-    public DaoFactory(ProxyConnection connection, BuilderFactory builderFactory) {
-        this.connection = connection;
-        this.builderFactory = builderFactory;
+    private DaoFactory() {
+    }
+
+    public static DaoFactory getInstance() {
+        return DAO_FACTORY;
     }
 
     public UserDao createUserDao() {
+        BuilderFactory builderFactory = new BuilderFactory();
         Builder<User> userBuilder = builderFactory.createUserBuilder();
-        return new UserDaoImpl(connection, userBuilder);
+        return new UserDaoImpl(userBuilder);
     }
 
     public GoalDao createGoalDao() {
+        BuilderFactory builderFactory = new BuilderFactory();
         Builder<Goal> goalBuilder = builderFactory.createGoalBuilder();
-        return new GoalDaoImpl(connection, goalBuilder);
+        return new GoalDaoImpl(goalBuilder);
     }
 
     public TaskDao createTaskDao() {
+        BuilderFactory builderFactory = new BuilderFactory();
         Builder<Task> taskBuilder = builderFactory.createTaskBuilder();
-        return new TaskDaoImpl(connection, taskBuilder);
+        return new TaskDaoImpl(taskBuilder);
     }
 
-    public  TypeDao createTypeDao() {
+    public TypeDao createTypeDao() {
+        BuilderFactory builderFactory = new BuilderFactory();
         Builder<Type> typeBuilder = builderFactory.createTypeBuilder();
-        return new TypeDaoImpl(connection, typeBuilder);
+        return new TypeDaoImpl(typeBuilder);
     }
 }
