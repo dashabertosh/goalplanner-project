@@ -1,7 +1,6 @@
 package by.epam.goalplanner.beans;
 
 public class Type {
-
     private long id;
     private String name;
 

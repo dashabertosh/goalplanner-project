@@ -17,20 +17,22 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractDao<T> implements BaseDao<T> {
+    private static final Logger LOGGER = LogManager.getLogger();
 
-    private ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-    private Builder<T> builder;
+    private final ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+    private final Builder<T> builder;
 
     AbstractDao(Builder<T> builder) {
         this.builder = builder;
     }
 
-    protected boolean executeUpdate(String sql, Object ... params) throws DaoException {
+    protected boolean executeUpdate(String sql, Object... params) throws DaoException {
        try (PreparedStatement statement = connection.prepareStatement(sql)) {
            prepareStatement(statement, params);
+           LOGGER.debug("Prepared statement: {}", statement);
            return(1 == statement.executeUpdate());
-
        } catch (SQLException e) {
+           LOGGER.error(e);
            throw new DaoException(e);
        } finally {
            ConnectionPool.getInstance().releaseConnection(connection);
@@ -51,9 +53,8 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
         return -1;
     }
 
-    protected List<T> executeQuery(String query, Object... params) {
+    protected List<T> executeQuery(String query, Object... params) throws DaoException {
         List<T> resultList = new ArrayList<>();
-
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, params);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -65,14 +66,15 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
                 }
             }
         } catch (SQLException e) {
-            //logger
+            LOGGER.error(e);
+            throw new DaoException(e);
         } finally {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
         return resultList;
     }
 
-    protected Optional<T> executeQueryForSingleResult(String query, Object... params) {
+    protected Optional<T> executeQueryForSingleResult(String query, Object... params) throws DaoException {
         List<T> itemsList = executeQuery(query, params);
         Optional<T> result = Optional.empty();
         if (itemsList.size() == 1) {

@@ -24,7 +24,7 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
     }
 
     @Override
-    public long findIdByName(String name) {
+    public long findIdByName(String name) throws DaoException {
         List<Type> type = executeQuery(SqlConstant.SELECT_TYPE_ID_BY_NAME.getName(), name);
         return type.get(0).getId();
     }
@@ -35,14 +35,14 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
     }
 
     @Override
-    public Type read(long id) {
+    public Type read(long id) throws DaoException {
         String sqlSuffix = String.format(SqlConstant.WHERE_ID.getName(), id);
         List<Type> all = getAll(sqlSuffix);
         return all.size() > 0 ? all.get(0) : null;
     }
 
     @Override
-    public List<Type> getAll(String sql) {
+    public List<Type> getAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_TYPES_WHERE.getName(), sql);
     }
 

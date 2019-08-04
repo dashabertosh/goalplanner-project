@@ -1,7 +1,6 @@
 package by.epam.goalplanner.beans;
 
 public class Role {
-
     private long id;
     private String role;
 

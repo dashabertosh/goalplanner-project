@@ -2,6 +2,8 @@ package by.epam.goalplanner.command.impl;
 
 import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.command.Cmd;
+import by.epam.goalplanner.exception.DaoException;
+import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ public class IndexCmd implements Cmd {
     }
 
     @Override
-    public ResultCmd execute(HttpServletRequest req) {
+    public ResultCmd execute(HttpServletRequest req) throws ServiceException {
         List<User> users = userService.findAll();
         req.setAttribute("users", users );
         return null;

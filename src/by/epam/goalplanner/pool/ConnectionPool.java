@@ -1,6 +1,8 @@
 package by.epam.goalplanner.pool;
 
 import by.epam.goalplanner.exception.ConnectionPoolException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -10,9 +12,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
+    private static final Logger LOGGER = LogManager.getLogger();
     private static ConnectionPool instance;
     
-    private static int POOL_SIZE = 5;
+    private static int POOL_SIZE = 30;
 
     private static BlockingQueue<ProxyConnection> openConnection = new ArrayBlockingQueue<>(POOL_SIZE);
     private static BlockingQueue<ProxyConnection> usedConnection = new ArrayBlockingQueue<>(POOL_SIZE);
@@ -20,12 +23,12 @@ public class ConnectionPool {
     private static ReentrantLock lock = new ReentrantLock();
     private static AtomicBoolean create = new AtomicBoolean(false);
 
-
     private ConnectionPool() {
         init();
     }
 
     public void init() {
+        LOGGER.debug("Initializing connection pool");
         ConnectionCreator creator = ConnectionCreator.INSTANCE;
         try {
             for (int i = 0; i < POOL_SIZE; i++) {
@@ -33,8 +36,9 @@ public class ConnectionPool {
                 ProxyConnection proxyConnectionConnection = new ProxyConnection(connection);
                 openConnection.add(proxyConnectionConnection);
             }
-        } catch (SQLException e) {
-            e.getStackTrace();
+        } catch (ConnectionPoolException e) {
+            LOGGER.error("Couldn't create connection");
+            e.printStackTrace();
         }
     }
 
@@ -59,7 +63,7 @@ public class ConnectionPool {
             connection = openConnection.take();
             usedConnection.add(connection);
         } catch (InterruptedException e) {
-            //log
+            LOGGER.error("Couldn't get connection from pool");
             Thread.currentThread().interrupt();
         }
         return connection;

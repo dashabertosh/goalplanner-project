@@ -34,7 +34,7 @@ public class FactoryCmd {
             case ProfileCmd.PAGE: {
                 UserService userService = serviceFactory.createUserService();
                 TaskService taskService = serviceFactory.createTaskService();
-                GoalService goalService = serviceFactory.createGoalService(); //
+                GoalService goalService = serviceFactory.createGoalService();
                 TypeService typeService = serviceFactory.createTypeService();
                 command = new ProfileCmd(userService, goalService, taskService, typeService);
                 break;

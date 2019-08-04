@@ -4,6 +4,7 @@ import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.command.Cmd;
 import by.epam.goalplanner.constant.VariableConstant;
 import by.epam.goalplanner.exception.DaoException;
+import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,7 @@ public class SignUpCmd implements Cmd {
     }
 
     @Override
-    public ResultCmd execute(HttpServletRequest req) throws DaoException {
+    public ResultCmd execute(HttpServletRequest req) throws ServiceException {
         ResultCmd result;
         if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
             String login = getString(req, VariableConstant.LOGIN.getName());
@@ -43,8 +44,7 @@ public class SignUpCmd implements Cmd {
 
     private String getString(HttpServletRequest req, String name, String pattern)  {
         String result = req.getParameter(name);
-        if (result.matches(pattern))
-            return result;
+        if (result.matches(pattern)) return result;
         return null;
     }
     private String getString(HttpServletRequest req, String name)  {

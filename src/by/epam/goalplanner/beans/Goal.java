@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 public class Goal {
-
     private long id;
     private String name;
     private String description;

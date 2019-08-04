@@ -1,7 +1,6 @@
 package by.epam.goalplanner.beans;
 
 public class User {
-
     private long id;
     private String login;
     private String password;

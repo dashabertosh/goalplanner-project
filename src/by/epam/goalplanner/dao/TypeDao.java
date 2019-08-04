@@ -8,5 +8,5 @@ import java.util.List;
 public interface TypeDao extends BaseDao<Type> {
     boolean create(String name) throws DaoException;
 
-    long findIdByName(String name);
+    long findIdByName(String name) throws DaoException;
 }

@@ -40,15 +40,15 @@
         <form class="update-goal-${goal.id}" action="do?command=profile" method=POST>
             <div class="row">
                 <div class=col-md-1>
-                    <input id="id" class="form-control input-md" name="id"
+                    <input id="id_goal" class="form-control input-md" name="id"
                            value="${goal.id}"/>
                 </div>
                 <div class=col-md-2>
-                    <input id="name" class="form-control input-md" name="name"
+                    <input id="name_goal" class="form-control input-md" name="name"
                            value="${goal.name}"/>
                 </div>
                 <div class=col-md-2>
-                    <input id="description" class="form-control input-md" name="description"
+                    <input id="description_goal" class="form-control input-md" name="description"
                            value="${goal.description}"/>
                 </div>
                 <div class=col-md-2>

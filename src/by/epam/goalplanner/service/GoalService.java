@@ -2,20 +2,21 @@ package by.epam.goalplanner.service;
 
 import by.epam.goalplanner.beans.Goal;
 import by.epam.goalplanner.exception.DaoException;
+import by.epam.goalplanner.exception.ServiceException;
 
 import java.util.Date;
 import java.util.List;
 
 public interface GoalService {
-    List<Goal> findGoalByDate(Date beginDate, Date endDate);
+    List<Goal> findGoalByDate(Date beginDate, Date endDate) throws ServiceException;
 
-    List<Goal> findAll();
+    List<Goal> findAll() throws ServiceException;
 
-    boolean update(Goal goal) throws DaoException;
+    boolean update(Goal goal) throws ServiceException;
 
-    boolean delete(Goal goal) throws DaoException;
+    boolean delete(Goal goal) throws ServiceException;
 
-    boolean create(String name, String description, Date beginDate, Date endDate, long user_id, long type_id) throws DaoException;
+    boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) throws ServiceException;
 
     List<Goal> findGoalByName(String name);
 }

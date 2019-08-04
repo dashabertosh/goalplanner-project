@@ -15,9 +15,8 @@ public class TaskBuilder implements Builder<Task> {
             String name = resultSet.getString(VariableConstant.NAME.getName());
             String description = resultSet.getString(VariableConstant.DESCRIPTION.getName());
             Date date = resultSet.getDate(VariableConstant.DATE.getName());
-            byte isDone = resultSet.getByte(VariableConstant.DONE.getName());
             long goal_id = resultSet.getLong(VariableConstant.GOAL_ID.getName());
-            return new Task(id, name, description, date, isDone, goal_id);
+            return new Task(id, name, description, date, goal_id);
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

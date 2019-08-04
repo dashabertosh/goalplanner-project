@@ -16,13 +16,13 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     }
 
     @Override
-    public boolean create(String name, String description, Date date, byte done, long goal_id) throws DaoException {
-        return executeUpdate(SqlConstant.CREATE_TASK.getName(), name, description, date, done, goal_id);
+    public boolean create(String name, String description, Date date, long goalId) throws DaoException {
+        return executeUpdate(SqlConstant.CREATE_TASK.getName(), name, description, date, goalId);
     }
 
     @Override
     public boolean update(Task task) throws DaoException {
-        return executeUpdate(SqlConstant.UPDATE_TASK.getName(), task.getName(), task.getDescription(), task.getDate(), task.getGoalId(), task.isDone());
+        return executeUpdate(SqlConstant.UPDATE_TASK.getName(), task.getName(), task.getDescription(), task.getDate(), task.getGoalId());
     }
 
     @Override
@@ -31,14 +31,14 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     }
 
     @Override
-    public Task read(long id) {
+    public Task read(long id) throws DaoException {
         String sqlSuffix = String.format(SqlConstant.WHERE_ID.getName(), id);
         List<Task> all = getAll(sqlSuffix);
         return all.size() > 0 ? all.get(0) : null;
     }
 
     @Override
-    public List<Task> getAll(String sql) {
+    public List<Task> getAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_TASK_WHERE.getName(), sql);
     }
 
@@ -48,7 +48,7 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     }
 
     @Override
-    public List<Task> findTasksByDate(long date) {
+    public List<Task> findTasksByDate(long date) throws DaoException {
         return executeQuery(SqlConstant.GET_TASKS_BY_DATE.getName(), date);
     }
 }

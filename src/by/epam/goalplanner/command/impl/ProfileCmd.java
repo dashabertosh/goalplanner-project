@@ -6,6 +6,7 @@ import by.epam.goalplanner.command.Cmd;
 import by.epam.goalplanner.constant.SqlConstant;
 import by.epam.goalplanner.constant.VariableConstant;
 import by.epam.goalplanner.exception.DaoException;
+import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TaskService;
 import by.epam.goalplanner.service.TypeService;
@@ -33,9 +34,8 @@ public class ProfileCmd implements Cmd {
     }
 
     @Override
-    public ResultCmd execute(HttpServletRequest req) throws DaoException {
+    public ResultCmd execute(HttpServletRequest req) throws ServiceException {
         if (!VerificationUser.checkUser(req)) return new ResultCmd(VariableConstant.LOGIN_JSP.getName(), true);
-
         if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
             if (req.getParameter(VariableConstant.UPDATE_TASK.getName()) != null) {
                 Task task = new Task();
@@ -63,7 +63,7 @@ public class ProfileCmd implements Cmd {
             }
         }
         List<Goal> goals = goalService.findAll();
-
+        req.setAttribute("goals", goals);
         for (Goal goal : goals) {
             String whereGoal = String.format(SqlConstant.WHERE_GOAL_ID.getName(), goal.getId());
             List<Task> tasks = taskService.findAll(whereGoal);

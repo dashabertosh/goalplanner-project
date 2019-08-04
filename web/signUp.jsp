@@ -63,7 +63,7 @@
                                        placeholder="password">
                             </div>
                             <div class="form-group">
-                                <button id="signup" name="signup" class="btn float-right login_btn">Создать</button>
+                                <button id="signUp" name="signUp" class="btn float-right login_btn">Создать</button>
                             </div>
                         </form>
                     </div>

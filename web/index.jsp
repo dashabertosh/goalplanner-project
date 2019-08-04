@@ -17,11 +17,11 @@
         <div class="col-md-3">Описание</div>
     </div>
 
-    <c:forEach items="${users}" var="users">
+    <c:forEach items="${users}" var="user">
         <br>
         <div class="row">
-            <div class="col-md-3">${users.name} </div>
-            <div class="col-md-3">${users.password} </div>
+            <div class="col-md-3">${user.name} </div>
+            <div class="col-md-3">${user.password} </div>
         </div>
     </c:forEach>
     <br><br>

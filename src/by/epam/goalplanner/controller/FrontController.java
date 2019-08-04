@@ -19,14 +19,14 @@ import java.io.IOException;
 
 
 public class FrontController extends HttpServlet {
-//    private static final Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public void init() {
-        try{
+        try {
             ConnectionPool.getInstance();
         } catch (RuntimeException e) {
-//            LOGGER.fatal("No database connection established.");
+            LOGGER.fatal("No database connection established.");
         }
     }
 
@@ -50,17 +50,21 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    private void process( HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, CommandException, DaoException {
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, CommandException, DaoException {
         String stringCmd = req.getParameter(VariableConstant.COMMAND.getName());
+//        ConnectionPool connectionPool = ConnectionPool.getInstance();
         try {
-//            LOGGER.debug("hhh");
             FactoryCmd factoryCmd = FactoryCmd.getInstance();
             Cmd cmd = factoryCmd.create(stringCmd);
             ResultCmd resultCmd = cmd.execute(req);
             dispatch(req, resp, resultCmd);
         } catch (Exception e) {
-          //  log();
+            LOGGER.error(e);
             resp.sendRedirect(stringCmd);
+//        } finally {
+//            if (connection =! null) {
+//                connectionPool.releaseConnection(connection);
+//            }
         }
     }
 

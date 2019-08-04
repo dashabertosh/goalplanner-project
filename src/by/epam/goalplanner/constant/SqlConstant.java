@@ -35,6 +35,7 @@ public enum SqlConstant {
 
     FIND_USER_BY_NAME("SELECT name FROM `user` WHERE user.name = ?"),
     SELECT_ALL_USERS_WHERE("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user` ?"),
+    SELECT_ALL_USERS("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user`"),
     CREATE_USER("INSERT INTO `user` (`login`, `password`, `name`,  `role_id`) VALUES (?, ?, ?, ?)"),
     DELETE_USER("DELETE FROM `user` WHERE `goalplanner`.`user`.`id` = ?"),
     UPDATE_USER("UPDATE `user` SET `login` = ?, `password` = ?, `name` = ?, `roles_id` = ? WHERE `user`.`id` = ?"),

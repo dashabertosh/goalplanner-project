@@ -8,7 +8,6 @@ import by.epam.goalplanner.service.impl.UserServiceImpl;
 
 
 public class ServiceFactory {
-
     private final static ServiceFactory SERVICE_FACTORY = new ServiceFactory();
 
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -39,5 +38,4 @@ public class ServiceFactory {
         TypeDao typeDao = daoFactory.createTypeDao();
         return new TypeServiceImpl(typeDao);
     }
-
 }

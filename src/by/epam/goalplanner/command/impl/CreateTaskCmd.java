@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class CreateTaskCmd implements Cmd {
     public static final String PAGE = "createTask";
@@ -34,10 +35,10 @@ public class CreateTaskCmd implements Cmd {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            byte done = Byte.parseByte(req.getParameter(VariableConstant.DONE.getName()));
-            Goal goal = goalService.findGoalByName(name).get(0);
 
-            boolean isTask = taskService.create(name, description, date, done, goal.getId());
+            Goal goal = goalService.findGoalByName(name).get(0); //
+
+            boolean isTask = taskService.create(name, description, date, goal.getId());
 
             result = new ResultCmd(VariableConstant.PROFILE_JSP.getName(), true);
             return result;

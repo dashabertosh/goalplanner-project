@@ -3,7 +3,10 @@ package by.epam.goalplanner.command.impl;
 import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.command.Cmd;
 import by.epam.goalplanner.constant.VariableConstant;
+import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,6 +14,8 @@ import java.util.Optional;
 
 
 public class LoginCmd implements Cmd {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     public static final String PAGE = "login";
 
     private final UserService userService;
@@ -20,7 +25,7 @@ public class LoginCmd implements Cmd {
     }
 
     @Override
-    public ResultCmd execute(HttpServletRequest req) {
+    public ResultCmd execute(HttpServletRequest req) throws ServiceException {
         ResultCmd result;
         if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
             String login = req.getParameter(VariableConstant.LOGIN.getName());
