@@ -44,8 +44,12 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
-    public List<Goal> findGoalByName(String name) {
-        return null;
+    public long findGoalIdByName(String name) throws ServiceException {
+        try {
+            return goalDao.findGoalByName(name).get(0).getId();
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 
     @Override

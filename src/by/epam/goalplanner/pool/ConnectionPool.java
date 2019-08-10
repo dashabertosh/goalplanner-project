@@ -15,10 +15,10 @@ public class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
     private static ConnectionPool instance;
     
-    private static int POOL_SIZE = 30;
+    private final static int POOL_SIZE = 30;
 
-    private static BlockingQueue<ProxyConnection> openConnection = new ArrayBlockingQueue<>(POOL_SIZE);
-    private static BlockingQueue<ProxyConnection> usedConnection = new ArrayBlockingQueue<>(POOL_SIZE);
+    private  BlockingQueue<ProxyConnection> openConnection = new ArrayBlockingQueue<>(POOL_SIZE);
+    private  BlockingQueue<ProxyConnection> usedConnection = new ArrayBlockingQueue<>(POOL_SIZE);
 
     private static ReentrantLock lock = new ReentrantLock();
     private static AtomicBoolean create = new AtomicBoolean(false);
@@ -27,7 +27,7 @@ public class ConnectionPool {
         init();
     }
 
-    public void init() {
+    private void init() {
         LOGGER.debug("Initializing connection pool");
         ConnectionCreator creator = ConnectionCreator.INSTANCE;
         try {
@@ -37,8 +37,7 @@ public class ConnectionPool {
                 openConnection.add(proxyConnectionConnection);
             }
         } catch (ConnectionPoolException e) {
-            LOGGER.error("Couldn't create connection");
-            e.printStackTrace();
+            LOGGER.error("Couldn't create connection", e);
         }
     }
 
@@ -63,18 +62,18 @@ public class ConnectionPool {
             connection = openConnection.take();
             usedConnection.add(connection);
         } catch (InterruptedException e) {
-            LOGGER.error("Couldn't get connection from pool");
+            LOGGER.error("Couldn't get connection from pool", e);
             Thread.currentThread().interrupt();
         }
         return connection;
     }
 
-    public void closePool() {
+    public void closePool() throws ConnectionPoolException {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 openConnection.take().realClose();
             } catch (InterruptedException | SQLException e) {
-                e.printStackTrace();
+                throw new ConnectionPoolException("Couldn't close connection", e);
             }
         }
     }
@@ -84,6 +83,8 @@ public class ConnectionPool {
             ProxyConnection pConnection = (ProxyConnection) connection;
             usedConnection.remove(connection);
             openConnection.offer(pConnection);
+        } else {
+            LOGGER.error("Connection not returned to ConnectionPool");
         }
     }
 

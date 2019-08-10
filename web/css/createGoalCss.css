@@ -22,14 +22,52 @@ html,body{
     color: white;
 }
 
+.input{
+    color: white;
+}
+
+.input-mod{
+    color: black;
+}
+
 .card{
-    height: 370px;
+    height: 650px;
     margin-top: auto;
     margin-bottom: auto;
-    width: 400px;
+    width: 600px;
     background-color: rgba(0,0,0,0.5) !important;
 }
 
+.modal-backdrop
+{
+    opacity:0.5 !important;
+}
+
+.modal-content {
+    -webkit-animation-name: animatetop;
+    -webkit-animation-duration: 0.4s;
+    animation-name: animatetop;
+    animation-duration: 0.4s
+}
+
+
+@-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+@keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+}
+
+.modal-header {
+    background-color: #FFC312;
+}
+
+.modal-footer {
+    background-color: #FFC312;
+}
 .card-header h3{
     color: white;
 }
@@ -42,7 +80,9 @@ html,body{
 }
 
 input:focus{
+    outline: 0 0 0 0  !important;
     box-shadow: 0 0 0 0 !important;
+
 }
 
 .remember{
@@ -75,4 +115,8 @@ input:focus{
 
 .links a{
     margin-left: 4px;
+}
+
+.modal-show {
+    display: block;
 }

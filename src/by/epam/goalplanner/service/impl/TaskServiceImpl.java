@@ -43,8 +43,14 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+
+
     @Override
-    public boolean create(String name, String description, Date date, long goalId) {
-        return false;
+    public boolean create(String name, String description, Date date, long goalId) throws ServiceException {
+        try {
+            return taskDao.create(name, description, date, goalId);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
     }
 }

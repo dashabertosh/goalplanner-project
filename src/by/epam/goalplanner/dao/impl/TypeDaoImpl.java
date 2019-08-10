@@ -1,8 +1,8 @@
 package by.epam.goalplanner.dao.impl;
 
 import by.epam.goalplanner.beans.Type;
-import by.epam.goalplanner.beans.builder.Builder;
-import by.epam.goalplanner.constant.SqlConstant;
+import by.epam.goalplanner.dao.builder.Builder;
+import by.epam.goalplanner.dao.SqlConstant;
 import by.epam.goalplanner.dao.TypeDao;
 import by.epam.goalplanner.exception.DaoException;
 
@@ -47,7 +47,7 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
     }
 
     @Override
-    public List<Type> getAll() {
-        return null;
+    public List<Type> getAll() throws DaoException {
+        return executeQuery(SqlConstant.SELECT_ALL_TYPES.getName());
     }
 }

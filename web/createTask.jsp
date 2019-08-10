@@ -1,71 +1,71 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="locale"/>
+
 <html>
-<%@ include file="include/head.jsp" %>
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <%--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>--%>
+    <%--    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--%>
+
+    <title><fmt:message key="task.create.title"/></title>
+
+    <!--Bootsrap 4 CDN-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <!--Custom styles-->
+    <link rel="stylesheet" type="text/css" href="css/createTaskCss.css">
+</head>
 <body>
 <div class="container">
     <%@ include file="include/menu.jsp" %>
-    <form class="form-horizontal" action=do?command=createTask method="POST">
-        <fieldset>
-
-            <form class="form-horizontal">
-                <fieldset>
-
-                    <!-- Form Name -->
-                    <legend>Your Task</legend>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="name">Name Task</label>
-                        <div class="col-md-4">
-                            <input id="name" name="name" value="TestNameTask" type="text" placeholder="" class="form-control input-md" required="">
-
-                        </div>
+    <form class="form-horizontal" action="do?command=createTask" method="POST">
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><fmt:message key="task.create.title"/></h3>
                     </div>
+                    <div class="card-body">
+                        <form>
+                            <label class="input" for="name"><fmt:message key="task.create.name"/></label>
+                            <input id="name" name="name" type="text" class="form-control" placeholder="name">
+                            <br>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="description">Description Task</label>
-                        <div class="col-md-4">
-                            <input id="description" name="description" value="TestDescriptionTask" type="text" placeholder="" class="form-control input-md" required="">
+                            <label class="input" for="description"><fmt:message key="task.create.description"/></label>
+                            <textarea id="description" name="description" class="form-control"
+                                      placeholder="description"> </textarea>
+                            <br>
 
-                        </div>
-                    </div>
+                            <label class="input" for="date"><fmt:message key="task.create.date"/></label>
+                            <input id="date" name="date" type="date" class="form-control"
+                                   placeholder="date">
+                            <br>
 
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="date">Date</label>
-                        <div class="col-md-4">
-                            <input id="date" name="date" value="2019" type="date" placeholder="" class="form-control input-md" required="">
-                        </div>
-                    </div>
-
-                    <!-- Text input-->
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="id_goals">Name Goals</label>
-                        <div class="col-md-4">
-                            <select id="id_goals" name="id_goals" class="form-control">
+                            <label class="input" for="goal_name"><fmt:message key="task.create.goal"/></label>
+                            <select id="goal_name" name="goal_name" class="form-control">
                                 <c:forEach items="${goals}" var="goal">
-                                    <option value="${goal.id}" role=${goal.id}>
-                                            ${goal.name}
+                                    <option value="${goal.name}">
+                                        <c:out value="${goal.name}"/>
                                     </option>
                                 </c:forEach>
-                                <option>Создать новую цель</option>
+                                <option><fmt:message key="task.create.newGoal"/></option>
                             </select>
-                        </div>
+                            <br>
+                            <div class="form-group">
+                                <input type="submit" value="<fmt:message key="common.message.create"/>" class="btn float-right login_btn">
+                            </div>
+                        </form>
                     </div>
-
-                    <!-- Button -->
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <button id="create" name="create" class="btn btn-primary">Create</button>
-                        </div>
-                    </div>
-
-                </fieldset>
-            </form>
-
-        </fieldset>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 </body>

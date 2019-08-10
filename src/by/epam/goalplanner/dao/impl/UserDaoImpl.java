@@ -1,8 +1,8 @@
 package by.epam.goalplanner.dao.impl;
 
 import by.epam.goalplanner.beans.User;
-import by.epam.goalplanner.beans.builder.Builder;
-import by.epam.goalplanner.constant.SqlConstant;
+import by.epam.goalplanner.dao.builder.Builder;
+import by.epam.goalplanner.dao.SqlConstant;
 import by.epam.goalplanner.dao.UserDao;
 import by.epam.goalplanner.exception.DaoException;
 

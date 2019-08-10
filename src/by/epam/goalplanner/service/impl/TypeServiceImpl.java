@@ -18,7 +18,7 @@ public class TypeServiceImpl implements TypeService {
     @Override
     public List<Type> findAll() throws ServiceException {
         try {
-            return typeDao.getAll("");
+            return typeDao.getAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

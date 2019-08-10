@@ -22,11 +22,15 @@ html,body{
     color: white;
 }
 
+.input{
+    color: white;
+}
+
 .card{
-    height: 370px;
+    height: 610px;
     margin-top: auto;
     margin-bottom: auto;
-    width: 400px;
+    width: 600px;
     background-color: rgba(0,0,0,0.5) !important;
 }
 
@@ -43,6 +47,7 @@ html,body{
 
 input:focus{
     box-shadow: 0 0 0 0 !important;
+
 }
 
 .remember{

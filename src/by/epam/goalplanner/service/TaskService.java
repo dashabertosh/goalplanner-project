@@ -14,5 +14,5 @@ public interface TaskService{
 
     List<Task> findAll(String string) throws ServiceException;
 
-    boolean create(String name, String description, Date date, long goalId);
+    boolean create(String name, String description, Date date, long goalId) throws ServiceException;
 }

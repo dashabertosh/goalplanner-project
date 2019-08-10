@@ -1,21 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Bertosh
-  Date: 16.07.2019
-  Time: 13:37
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="locale"/>
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Регистрация</title>
-    <!--Made with love by Mutiullah Samim -->
+    <title><fmt:message key="signUp.title"/></title>
 
     <!--Bootsrap 4 CDN-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -37,7 +31,7 @@
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
                     <div class="card-header">
-                        <h3>Регистрация</h3>
+                        <h3><fmt:message key="signUp.title"/></h3>
                     </div>
                     <div class="card-body">
                         <form>
@@ -45,14 +39,16 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="name">
+                                <input id="name" name="name" type="text" class="form-control"
+                                       placeholder="<fmt:message key="signUp.name"/>">
 
                             </div>
                             <div class="input-group form-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-user"></i></span>
                                 </div>
-                                <input id="login" name="login" type="text" class="form-control" placeholder="login">
+                                <input id="login" name="login" type="text" class="form-control"
+                                       placeholder="<fmt:message key="signUp.login"/>">
 
                             </div>
                             <div class="input-group form-group">
@@ -60,22 +56,19 @@
                                     <span class="input-group-text"><i class="fas fa-key"></i></span>
                                 </div>
                                 <input id="password" name="password" type="password" class="form-control"
-                                       placeholder="password">
+                                       placeholder="<fmt:message key="signUp.password"/>">
                             </div>
                             <div class="form-group">
-                                <button id="signUp" name="signUp" class="btn float-right login_btn">Создать</button>
+                                <button id="signUp" name="signUp" class="btn float-right login_btn"><fmt:message
+                                        key="signUp.sgnUp"/></button>
                             </div>
                         </form>
-                    </div>
-                    <div class="card-footer">
-                        <div class="d-flex justify-content-center">
-                            <a href="#">Forgot your password?</a>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+</div>
 </body>
 </html>
 

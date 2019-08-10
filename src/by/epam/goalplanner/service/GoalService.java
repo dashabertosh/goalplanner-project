@@ -18,6 +18,6 @@ public interface GoalService {
 
     boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) throws ServiceException;
 
-    List<Goal> findGoalByName(String name);
+    long findGoalIdByName(String name) throws ServiceException;
 }
 

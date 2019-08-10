@@ -1,6 +1,6 @@
 package by.epam.goalplanner.dao.impl;
 
-import by.epam.goalplanner.beans.builder.Builder;
+import by.epam.goalplanner.dao.builder.Builder;
 import by.epam.goalplanner.dao.BaseDao;
 import by.epam.goalplanner.exception.DaoException;
 import by.epam.goalplanner.pool.ConnectionPool;
@@ -19,7 +19,6 @@ import java.util.Optional;
 public abstract class AbstractDao<T> implements BaseDao<T> {
     private static final Logger LOGGER = LogManager.getLogger();
 
-    private final ProxyConnection connection = ConnectionPool.getInstance().getConnection();
     private final Builder<T> builder;
 
     AbstractDao(Builder<T> builder) {
@@ -27,19 +26,21 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
     }
 
     protected boolean executeUpdate(String sql, Object... params) throws DaoException {
-       try (PreparedStatement statement = connection.prepareStatement(sql)) {
-           prepareStatement(statement, params);
-           LOGGER.debug("Prepared statement: {}", statement);
-           return(1 == statement.executeUpdate());
-       } catch (SQLException e) {
-           LOGGER.error(e);
-           throw new DaoException(e);
-       } finally {
-           ConnectionPool.getInstance().releaseConnection(connection);
-       }
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            prepareStatement(statement, params);
+            LOGGER.debug("Prepared statement: {}", statement);
+            return (1 == statement.executeUpdate());
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new DaoException(e);
+        } finally {
+            ConnectionPool.getInstance().releaseConnection(connection);
+        }
     }
 
     protected long executeCreateAndGetId(String sql) throws SQLException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             if (1 == statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -54,6 +55,7 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
     }
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
+        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         List<T> resultList = new ArrayList<>();
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, params);
@@ -85,13 +87,9 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
     }
 
 
-    private void prepareStatement(PreparedStatement statement, Object... params) {
-        try {
+    private void prepareStatement(PreparedStatement statement, Object... params) throws SQLException {
             for (int i = 1; i < params.length + 1; i++) {
                 statement.setObject(i, params[i - 1]);
             }
-        } catch (SQLException e) {
-            e.getStackTrace();
-        }
     }
 }
