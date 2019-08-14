@@ -10,6 +10,7 @@ import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TaskService;
 import by.epam.goalplanner.validate.Validator;
+import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,6 +48,7 @@ public class CreateTaskCommand implements Command {
                 Date date = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DbConstant.DATE.getName()));
                 Goal goal = goalService.findGoalByName(goalName);
 
+                XssProtection protection = XssProtection.profileProtection(name, description);
                 String message = Validator.validateCreateTask(name, description, date, goal);
                 if (message != null) {
                     LOGGER.debug("Data entered incorrectly.");
@@ -56,7 +58,7 @@ public class CreateTaskCommand implements Command {
                     return result;
                 }
 
-                taskService.create(name, description, date, goal.getId());
+                taskService.create(protection.getName(), protection.getDescription(), date, goal.getId());
                 result = new ResultCommand(VariableConstant.DO_COMMAND_PROFILE.getName(), false);
                 return result;
             }

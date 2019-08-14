@@ -44,12 +44,12 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     }
 
     @Override
-    public List<Goal> getAll() throws DaoException {
+    public List<Goal> findAll() throws DaoException {
         return executeQuery(SqlConstant.GET_ALL_GOALS.getName());
     }
 
     @Override
-    public List<Goal> getAll(String sql) throws DaoException {
+    public List<Goal> findAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.GET_ALL_GOALS_WHERE.getName(), sql);
     }
 

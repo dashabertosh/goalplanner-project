@@ -11,10 +11,8 @@ import org.apache.logging.log4j.Logger;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractDao<T> implements BaseDao<T> {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -39,21 +37,6 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
         }
     }
 
-    protected long executeCreateAndGetId(String sql) throws SQLException {
-        ProxyConnection connection = ConnectionPool.getInstance().getConnection();
-        try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            if (1 == statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS)) {
-                ResultSet generatedKeys = statement.getGeneratedKeys();
-                if (generatedKeys.next()) {
-                    return generatedKeys.getLong(1);
-                }
-            }
-        } finally {
-            ConnectionPool.getInstance().releaseConnection(connection);
-        }
-        return -1;
-    }
-
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
         List<T> resultList = new ArrayList<>();
@@ -75,17 +58,6 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
         }
         return resultList;
     }
-
-    protected Optional<T> executeQueryForSingleResult(String query, Object... params) throws DaoException {
-        List<T> itemsList = executeQuery(query, params);
-        Optional<T> result = Optional.empty();
-        if (itemsList.size() == 1) {
-            T firstItem = itemsList.get(0);
-            result = Optional.of(firstItem);
-        }
-        return result;
-    }
-
 
     private void prepareStatement(PreparedStatement statement, Object... params) throws SQLException {
             for (int i = 1; i < params.length + 1; i++) {

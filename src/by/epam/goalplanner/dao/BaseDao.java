@@ -9,7 +9,7 @@ public interface BaseDao<Type> {
 
     boolean update(Type type) throws DaoException;
 
-    List<Type> getAll(String sql) throws DaoException;
+    List<Type> findAll(String sql) throws DaoException;
 
-    List<Type> getAll() throws DaoException;
+    List<Type> findAll() throws DaoException;
 }

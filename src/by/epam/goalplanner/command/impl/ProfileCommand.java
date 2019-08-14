@@ -13,6 +13,7 @@ import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TaskService;
 import by.epam.goalplanner.service.TypeService;
 import by.epam.goalplanner.validate.Validator;
+import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,6 +50,7 @@ public class ProfileCommand implements Command {
                     long userId = (VerificationUser.findUser(req)).getId();
                     long typeId = typeService.findIdTypeById(Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName())));
 
+                    XssProtection protection = XssProtection.profileProtection(model.getName(), model.getDescription());
                     String message = Validator.validateProfile(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate());
                     if (message != null) {
                         LOGGER.debug("Data entered incorrectly.");
@@ -58,7 +60,7 @@ public class ProfileCommand implements Command {
                         return result;
                     }
 
-                    Goal goal = new Goal(id, model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate(), userId, typeId);
+                    Goal goal = new Goal(id, protection.getName(), protection.getDescription(), model.getBeginDate(), model.getEndDate(), userId, typeId);
                     if (req.getParameter(VariableConstant.UPDATE_GOAL.getName()) != null) {
                         goalService.update(goal);
                     } else if (req.getParameter(VariableConstant.DELETE_GOAL.getName()) != null) {

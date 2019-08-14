@@ -1,9 +1,6 @@
 package by.epam.goalplanner.dao.builder;
 
-import by.epam.goalplanner.beans.Goal;
-import by.epam.goalplanner.beans.Task;
-import by.epam.goalplanner.beans.Type;
-import by.epam.goalplanner.beans.User;
+import by.epam.goalplanner.beans.*;
 
 public class BuilderFactory {
     public Builder<User> createUserBuilder() {
@@ -19,4 +16,6 @@ public class BuilderFactory {
     }
 
     public Builder<Type> createTypeBuilder() { return new TypeBuilder(); }
+
+    public Builder<Role> createRoleBuilder() { return new RoleBuilder(); }
 }

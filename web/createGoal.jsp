@@ -22,6 +22,16 @@
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="css/createGoalCss.css">
+    <style>
+        .lang-change{
+            background: #FFC312; /* Цвет фона */
+            border: 1px solid #7a7b7e; /* Параметры рамки */
+            width: 30px; /* Ширина кнопки */
+            height: 30px; /* Высота */
+            align-content: center;
+            border-radius: 30px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">

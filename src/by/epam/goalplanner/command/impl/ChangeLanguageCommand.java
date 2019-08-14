@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ChangeLanguageCommand implements Command {
-    public static final String NAME = "change_language";
+    public static final String PAGE = "change_language";
 
     private static final String LANGUAGE_ATTRIBUTE = "language";
     private static final String REFERER = "Referer";

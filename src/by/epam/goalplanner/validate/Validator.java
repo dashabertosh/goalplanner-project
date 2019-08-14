@@ -1,15 +1,14 @@
 package by.epam.goalplanner.validate;
 
 import by.epam.goalplanner.beans.Goal;
+import by.epam.goalplanner.command.VariableConstant;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class Validator {
     private static final String REGULAR_PASSWORD = "(?=^.{8,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$";
     private static final String REGULAR_LOGIN = "^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$";
-    private static final String REGULAR_NAME = "^[A-ZÀ-ß][a-zà-ÿ]{3,}";
-    private static final String REGULAR_GOAL_TASK_NAME = "([à-ÿ-ß¸¨azA-Z0-9]+){1,45}";
-    private static final String REGULAR_GOAL_TASK_DESCRIPTION = "([à-ÿ-ß¸¨azA-Z0-9]+){1,100}";
 
     public static String validateSignUp(String name, String login, String password) {
         if (name.isEmpty()) {
@@ -32,7 +31,7 @@ public class Validator {
             return ValidateConstant.LOGIN_NOT_CORRECT.getName();
         }
 
-        if (!name.matches(REGULAR_NAME)) {
+        if (name.length() > 45) {
             return ValidateConstant.NAME_NOT_CORRECT.getName();
         }
 

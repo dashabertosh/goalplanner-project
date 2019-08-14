@@ -27,7 +27,7 @@
             <h1><fmt:message key="profile.allGoals"/></h1>
             <div class="row">
                 <div class=col-md-2><fmt:message key="profile.goal"/></div>
-                <div class=col-md-2><fmt:message key="profile.description"/></div>
+                <div class=col-md-3><fmt:message key="profile.description"/></div>
                 <div class=col-md-2><fmt:message key="profile.beginDate"/></div>
                 <div class=col-md-2><fmt:message key="profile.endDate"/></div>
             </div>
@@ -43,17 +43,17 @@
                             <input id="name_goal" class="form-control input-md" name="name_goal"
                                    value="${goal.name}"/>
                         </div>
-                        <div class=col-md-2>
+                        <div class=col-md-3>
                             <input id="description_goal" class="form-control input-md" name="description"
                                    value="${goal.description}"/>
                         </div>
                         <div class=col-md-2>
-                            <input id="begin_date" class="form-control input-md" name="begin_date"
+                            <input id="begin_date" class="form-control input-md" name="begin_date" type="date"
                                    value="${goal.beginDate}"/>
                         </div>
 
                         <div class=col-md-2>
-                            <input id="end_date" class="form-control input-md" name="end_date"
+                            <input id="end_date" class="form-control input-md" name="end_date" type="date"
                                    value="${goal.endDate}"/>
                         </div>
                         <div class=col-md-1>
@@ -69,11 +69,11 @@
                         </div>
                     </div>
                 </form>
-                <form>
+                <form action="do?command=profile" method="POST">
                     <br>
                     <h6><fmt:message key="profile.tasks"/> ${goal.name}</h6>
                     <c:forEach items="${goal.tasks}" var="task">
-                        <form class="update-task-${task.id}" action="do?command=profile" method="POST">
+                        <form class="update-task-${task.id}">
                             <div class="row">
                                 <input type="hidden" id="id_task" class="form-control input-md" name="id_task"
                                        value="${task.id}"/>

@@ -1,5 +1,6 @@
 package by.epam.goalplanner.dao.impl;
 
+import by.epam.goalplanner.beans.Type;
 import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.command.Hasher;
 import by.epam.goalplanner.dao.builder.Builder;
@@ -9,7 +10,6 @@ import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.DaoException;
 
 import java.util.List;
-import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public UserDaoImpl(Builder<User> builder) {
@@ -36,28 +36,23 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> getAll(String sql) throws DaoException {
+    public List<User> findAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_USERS_WHERE.getName(), sql);
     }
 
     @Override
-    public List<User> getAll() throws DaoException {
+    public List<User> findAll() throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_USERS.getName());
     }
 
     @Override
-    public Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
+    public List<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
         try {
             String hashPassword = Hasher.getHash(password);
-            return executeQueryForSingleResult(SqlConstant.SELECT_USER_BY_LOGIN_AND_PASSWORD.getName(), login, hashPassword);
+            return executeQuery(SqlConstant.SELECT_USER_BY_LOGIN_AND_PASSWORD.getName(), login, hashPassword);
         } catch (CommandException e) {
             throw new DaoException(e);
         }
 
-    }
-
-    @Override
-    public List<User> findUserByName(String name) throws DaoException {
-        return executeQuery(SqlConstant.FIND_USER_BY_NAME.getName(), name);
     }
 }

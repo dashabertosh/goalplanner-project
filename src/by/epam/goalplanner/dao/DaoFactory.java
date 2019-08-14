@@ -1,15 +1,12 @@
 package by.epam.goalplanner.dao;
 
-import by.epam.goalplanner.beans.Goal;
-import by.epam.goalplanner.beans.Task;
-import by.epam.goalplanner.beans.Type;
-import by.epam.goalplanner.beans.User;
+import by.epam.goalplanner.beans.*;
 import by.epam.goalplanner.dao.builder.Builder;
 import by.epam.goalplanner.dao.builder.BuilderFactory;
-import by.epam.goalplanner.dao.impl.GoalDaoImpl;
-import by.epam.goalplanner.dao.impl.TaskDaoImpl;
-import by.epam.goalplanner.dao.impl.TypeDaoImpl;
-import by.epam.goalplanner.dao.impl.UserDaoImpl;
+import by.epam.goalplanner.dao.impl.*;
+import by.epam.goalplanner.exception.DaoException;
+
+import java.util.List;
 
 
 public class DaoFactory {
@@ -45,4 +42,11 @@ public class DaoFactory {
         Builder<Type> typeBuilder = builderFactory.createTypeBuilder();
         return new TypeDaoImpl(typeBuilder);
     }
+
+    public RoleDao createRoleDao() {
+        BuilderFactory builderFactory = new BuilderFactory();
+        Builder<Role> roleBuilder = builderFactory.createRoleBuilder();
+        return new RoleDaoImpl(roleBuilder);
+    }
+
 }

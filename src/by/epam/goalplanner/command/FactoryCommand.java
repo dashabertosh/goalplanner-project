@@ -54,8 +54,13 @@ public class FactoryCommand {
                 command = new LogoutCommand();
                 break;
             }
-            case ChangeLanguageCommand.NAME: {
+            case ChangeLanguageCommand.PAGE: {
                 command = new ChangeLanguageCommand();
+                break;
+            }
+            case AdminCommand.PAGE: {
+                UserService userService = serviceFactory.createUserService();
+                command = new AdminCommand(userService);
                 break;
             }
             default: {

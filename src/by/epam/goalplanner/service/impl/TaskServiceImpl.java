@@ -19,7 +19,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAll() throws ServiceException {
         try {
-            return taskDao.getAll();
+            return taskDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -55,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<Task> findAll(String string) throws ServiceException {
         try {
-            return taskDao.getAll(string);
+            return taskDao.findAll(string);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

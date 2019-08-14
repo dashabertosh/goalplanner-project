@@ -15,8 +15,8 @@ public enum ValidateConstant {
     END_DATE_EMPTY("common.message.end.date.empty"),
     DATES_NOT_CORRECT("common.message.dates.not.correct"),
     TASK_DATE_EMPTY("common.message.date.empty"),
-    TASK_DATE_NOT_CORRECT("common.message.task.date.not.correct")
-
+    TASK_DATE_NOT_CORRECT("common.message.task.date.not.correct"),
+    USER_EXIST("common.message.user.exist"),
     ;
     private String name;
 

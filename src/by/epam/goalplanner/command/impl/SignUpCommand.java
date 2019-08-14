@@ -8,12 +8,13 @@ import by.epam.goalplanner.dao.DbConstant;
 import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.UserService;
+import by.epam.goalplanner.validate.ValidateConstant;
 import by.epam.goalplanner.validate.Validator;
+import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 public class SignUpCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -35,24 +36,32 @@ public class SignUpCommand implements Command {
                 String name = getString(req, DbConstant.NAME.getName());
                 String password = getString(req, DbConstant.PASSWORD.getName());
 
+                XssProtection protection = XssProtection.signUpProtection(name, login, password);
                 String message = Validator.validateSignUp(name, login, password);
                 if (message != null) {
                     LOGGER.debug("Data entered incorrectly.");
                     req.setAttribute(VariableConstant.MESSAGE.getName(), message);
-                    result = new ResultCommand(VariableConstant.SIGN_UP_JSP.getName(), true);// FIXME: 13.08.2019
+                    result = new ResultCommand(VariableConstant.SIGN_UP_JSP.getName(), true);
                     return result;
                 }
 
-                String hashPassword = Hasher.getHash(password);
-                boolean isUser = userService.create(login, hashPassword, name);
-                if (isUser) {
-                    Optional<User> user = userService.login(login, password);
-                    req.getSession().setAttribute(VariableConstant.USER.getName(), user);
+                String hashPassword = Hasher.getHash(protection.getPassword());
+                if (userService.login(protection.getLogin(), protection.getPassword()).isEmpty()) {
+                    boolean isUser = userService.create(protection.getLogin(), hashPassword, protection.getName());
+                    if (isUser) {
+                        User user = userService.login(protection.getLogin(), protection.getPassword()).get(0);
+                        req.getSession().setAttribute(VariableConstant.USER.getName(), user);
+                    }
+                    result = new ResultCommand(VariableConstant.PROFILE_JSP.getName(), true);
+                    return result;
+                } else {
+                    String messageExist = ValidateConstant.USER_EXIST.getName();
+                    req.setAttribute(VariableConstant.MESSAGE.getName(), messageExist);
+                    result = new ResultCommand(VariableConstant.SIGN_UP_JSP.getName(), true);
+                    return result;
                 }
-                result = new ResultCommand(VariableConstant.PROFILE_JSP.getName(), true);
-                return result;
             } else {
-                result = new ResultCommand(VariableConstant.SIGN_UP_JSP.getName(), true);// FIXME: 13.08.2019
+                result = new ResultCommand(VariableConstant.SIGN_UP_JSP.getName(), true);
                 return result;
             }
         } catch (ServiceException e) {

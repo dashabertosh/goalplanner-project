@@ -36,12 +36,12 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     }
 
     @Override
-    public List<Task> getAll(String sql) throws DaoException {
+    public List<Task> findAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_TASK_WHERE.getName(), sql);
     }
 
     @Override
-    public List<Task> getAll() {
+    public List<Task> findAll() {
         return null;
     }
 

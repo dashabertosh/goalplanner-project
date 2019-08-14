@@ -31,7 +31,7 @@ public class GoalServiceImpl implements GoalService {
     @Override
     public List<Goal> findAll() throws ServiceException {
         try {
-            return goalDao.getAll();
+            return goalDao.findAll();
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -40,7 +40,7 @@ public class GoalServiceImpl implements GoalService {
     @Override
     public List<Goal> findAll(String string) throws ServiceException {
         try {
-            return goalDao.getAll(string);
+            return goalDao.findAll(string);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

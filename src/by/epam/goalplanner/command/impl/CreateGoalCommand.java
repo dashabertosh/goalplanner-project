@@ -11,11 +11,16 @@ import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TypeService;
+import by.epam.goalplanner.validate.Validator;
+import by.epam.goalplanner.validate.XssProtection;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class CreateGoalCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger();
     public static final String PAGE = "createGoal";
 
     private final TypeService typeService;
@@ -31,13 +36,12 @@ public class CreateGoalCommand implements Command {
         ResultCommand result;
         try {
             if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
+                LOGGER.debug("Command " + PAGE + "  began to execute.");
                 if (req.getParameter(DbConstant.CREATE_TYPE.getName()) != null) {
                     String newType = req.getParameter(VariableConstant.NEW_TYPE.getName());
 
                     typeService.create(newType);
-                    List<Type> types = typeService.findAll();
-                    req.setAttribute(VariableConstant.TYPES.getName(), types);
-
+                    showInfo(req);
                     result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
                     return result;
                 }
@@ -47,7 +51,18 @@ public class CreateGoalCommand implements Command {
                     try {
                         String type = req.getParameter(DbConstant.TYPE_NAME.getName());
                         long typeId = typeService.findIdByName(type);
-                        goalService.create(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate(), user.getId(), typeId);
+
+                        XssProtection protection = XssProtection.profileProtection(model.getName(), model.getDescription());
+                        String message = Validator.validateProfile(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate());
+                        if (message != null) {
+                            LOGGER.debug("Data entered incorrectly.");
+                            req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                            showInfo(req);
+                            result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                            return result;
+                        }
+
+                        goalService.create(protection.getName(), protection.getDescription(), model.getBeginDate(), model.getEndDate(), user.getId(), typeId);
                     } catch (ServiceException e) {
                         throw new CommandException(e);
                     }
@@ -66,5 +81,9 @@ public class CreateGoalCommand implements Command {
         }
     }
 
+    private void showInfo(HttpServletRequest req) throws ServiceException {
+        List<Type> types = typeService.findAll();
+        req.setAttribute(VariableConstant.TYPES.getName(), types);
+    }
 
 }

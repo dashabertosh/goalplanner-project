@@ -9,11 +9,13 @@ import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.UserService;
 import by.epam.goalplanner.validate.ValidateConstant;
 import by.epam.goalplanner.validate.Validator;
+import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -36,6 +38,7 @@ public class LoginCommand implements Command {
                 String login = req.getParameter(DbConstant.LOGIN.getName());
                 String password = req.getParameter(DbConstant.PASSWORD.getName());
 
+                XssProtection protection = XssProtection.loginProtection(login, password);
                 String message = Validator.validateLogin(login, password);
                 if (message != null) {
                     LOGGER.debug("Data entered incorrectly.");
@@ -44,12 +47,17 @@ public class LoginCommand implements Command {
                     return result;
                 }
 
-                Optional<User> user = userService.login(login, password);
+                List<User> listUser = userService.login(protection.getLogin(), protection.getPassword());
 
                 HttpSession session = req.getSession();
-                if (user.isPresent()) {
-                    session.setAttribute(VariableConstant.USER.getName(), user.get());
-                    result = new ResultCommand(VariableConstant.DO_COMMAND_PROFILE.getName(), false);
+                if (!listUser.isEmpty()) {
+                    User user = listUser.get(0);
+                    session.setAttribute(VariableConstant.USER.getName(), user);
+                    if (user.getRoleId() == 1) {
+                        result = new ResultCommand(VariableConstant.DO_COMMAND_PROFILE.getName(), false);
+                    } else {
+                        result = new ResultCommand(VariableConstant.DO_COMMAND_ADMIN.getName(), false);
+                    }
                 } else {
                     LOGGER.debug("User is not found.");
                     String noUser = ValidateConstant.NO_USER.getName();

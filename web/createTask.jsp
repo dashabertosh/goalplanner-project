@@ -7,6 +7,7 @@
 
 <html>
 <head>
+    <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -23,6 +24,16 @@
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="css/createTaskCss.css">
+    <style>
+        .lang-change{
+            background: #FFC312; /* Цвет фона */
+            border: 1px solid #7a7b7e; /* Параметры рамки */
+            width: 30px; /* Ширина кнопки */
+            height: 30px; /* Высота */
+            align-content: center;
+            border-radius: 30px;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -42,7 +53,7 @@
 
                             <label class="input" for="description"><fmt:message key="task.create.description"/></label>
                             <textarea id="description" name="description" class="form-control"
-                                      placeholder="description"> </textarea>
+                                      placeholder="description"></textarea>
                             <br>
 
                             <label class="input" for="date"><fmt:message key="task.create.date"/></label>

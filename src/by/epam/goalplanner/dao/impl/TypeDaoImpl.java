@@ -41,12 +41,12 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
     }
 
     @Override
-    public List<Type> getAll(String sql) throws DaoException {
+    public List<Type> findAll(String sql) throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_TYPES_WHERE.getName(), sql);
     }
 
     @Override
-    public List<Type> getAll() throws DaoException {
+    public List<Type> findAll() throws DaoException {
         return executeQuery(SqlConstant.SELECT_ALL_TYPES.getName());
     }
 }

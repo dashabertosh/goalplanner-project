@@ -36,7 +36,7 @@ public enum SqlConstant {
     DELETE_TYPE("DELETE FROM `type` WHERE `type`.`id` = ?"),
     SELECT_ID_BY_NAME("SELECT `id`, `name` FROM `type` WHERE `name` = ?"),
 
-    FIND_USER_BY_NAME("SELECT name FROM `user` WHERE user.name = ?"),
+    FIND_ALL_ROLES("SELECT `id`, `name` FROM `role` WHERE `id` IN (1,2)"),
     SELECT_ALL_USERS_WHERE("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user` ?"),
     SELECT_ALL_USERS("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user`"),
     CREATE_USER("INSERT INTO `user` (`login`, `password`, `name`,  `role_id`) VALUES (?, ?, ?, ?)"),

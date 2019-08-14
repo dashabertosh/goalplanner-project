@@ -2,15 +2,11 @@ package by.epam.goalplanner.dao;
 
 import by.epam.goalplanner.beans.User;
 import by.epam.goalplanner.exception.DaoException;
-import by.epam.goalplanner.exception.ServiceException;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserDao extends BaseDao<User> {
-    List<User> findUserByName(String name) throws DaoException;
-
-    Optional<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
+    List<User> findUserByLoginAndPassword(String login, String password) throws DaoException;
 
     boolean create(String login, String password, String name) throws DaoException;
 }

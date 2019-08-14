@@ -12,6 +12,7 @@ public enum  VariableConstant {
     CREATE_GOAL_JSP("createGoal.jsp"),
     CREATE_TASK_JSP("createTask.jsp"),
     SIGN_UP_JSP("signUp.jsp"),
+    ADMIN_JSP("admin.jsp"),
     LOGIN_JSP("login.jsp"),
     PROFILE_JSP("profile.jsp"),
     UPDATE_TASK("update_task"),
@@ -20,6 +21,7 @@ public enum  VariableConstant {
     DELETE_GOAL("delete_goal"),
     GOALS("goals"),
     USER("user"),
+    DO_COMMAND_ADMIN("do?command=admin"),
     DO_COMMAND_PROFILE("do?command=profile"),
     DO_COMMAND_LOGIN("do?command=login");
 
