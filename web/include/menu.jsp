@@ -1,11 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<c:set var="language"
-       value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}"
-       scope="session"/>
-<fmt:setLocale value="${language}" scope="session"/>
-<fmt:setBundle basename="locale"/>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href=".">HOME</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,7 +20,9 @@
                     <a class="nav-item nav-link" href="do?command=logout"><fmt:message key="common.message.logout"/></a>
                 </c:otherwise>
             </c:choose>
-            <c:import url="include/language-panel.jsp"/>
         </div>
+    </div>
+    <div class="language">
+        <c:import url="include/language-panel.jsp"/>
     </div>
 </nav>

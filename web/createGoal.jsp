@@ -1,8 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="t" uri="/WEB-INF/tld/footertag" %>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 <html>
 <head>
+    <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -24,6 +27,7 @@
 <div class="container">
     <%@ include file="include/menu.jsp" %>
     <form class="form-horizontal" action="do?command=createGoal" method="POST">
+        <input type="hidden" name="command" value="language"/>
         <fieldset>
             <div class="container">
                 <div class="d-flex justify-content-center h-100">
@@ -33,10 +37,11 @@
                         </div>
                         <div class="card-body">
                             <form>
-                                <label class="input" for="name"><fmt:message key="goal.create.name"/></label>
-                                <input id="name" name="name" type="text" class="form-control" placeholder="name">
+                                <label class="input" for="name_goal"><fmt:message key="goal.create.name"/></label>
+                                <input id="name_goal" name="name_goal" type="text" class="form-control" placeholder="name">
                                 <br>
-                                <label class="input" for="description"><fmt:message key="goal.create.description"/></label>
+                                <label class="input" for="description"><fmt:message
+                                        key="goal.create.description"/></label>
                                 <textarea id="description" name="description" class="form-control"
                                           placeholder="description"> </textarea>
                                 <br>
@@ -59,32 +64,40 @@
                                 </select>
                                 <br>
 
-                                <div id="myModal" class="modal">
+                                <form class="create_type" action="do?command=createGoal" method="POST">
+                                    <div id="myModal" class="modal">
 
 
-                                    <div class="modal" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title"><fmt:message key="goal.create.newType"/></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <label class="input-mod" for="newType"><fmt:message key="goal.create.createTypeName"/></label>
-                                                    <input id="newType" name="newType" type="text" class="form-control">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary"><fmt:message key="common.message.create"/></button>
-                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><fmt:message key="goal.create.close"/></button>
+                                        <div class="modal" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"><fmt:message
+                                                                key="goal.create.newType"/></h5>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <label class="input-mod" for="newType"><fmt:message
+                                                                key="goal.create.createTypeName"/></label>
+                                                        <input id="newType" name="newType" type="text"
+                                                               class="form-control">
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button id="create_type" value="create_type" name="create_type"
+                                                                class="btn btn-success"><fmt:message
+                                                                key="common.message.create"/></button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-dismiss="modal"><fmt:message
+                                                                key="goal.create.close"/></button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                </div>
-
+                                </form>
 
                                 <!-- jQuery -->
                                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
@@ -104,13 +117,18 @@
             </div>
         </fieldset>
     </form>
+    <t:colontitle/>
 </div>
 <script>
-    $('.form-control').change(function(event) {
-        if($(this).val() === "1") {
+    $('.form-control').change(function (event) {
+        if ($(this).val() === "1") {
             $('.modal').modal();
         }
     });
+</script>
+<script>
+    var data = '<fmt:message key="${message}"/>';
+    if ('${message}' !== '') alert(data);
 </script>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package by.epam.goalplanner.dao.impl;
 
 import by.epam.goalplanner.beans.Goal;
+import by.epam.goalplanner.beans.Type;
 import by.epam.goalplanner.dao.builder.Builder;
 import by.epam.goalplanner.dao.SqlConstant;
 import by.epam.goalplanner.command.VariableConstant;
@@ -33,13 +34,13 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     }
 
     @Override
-    public boolean delete(Goal goal) throws DaoException { return executeUpdate(VariableConstant.DELETE_GOAL.getName(), goal.getId()); }
+    public boolean delete(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_GOAL.getName(), id);
+    }
 
     @Override
-    public Goal read(long id) throws DaoException {
-        String sqlSuffix = String.format(SqlConstant.WHERE_ID.getName(), id);
-        List<Goal> all = getAll(sqlSuffix);
-        return all.size() > 0 ? all.get(0) : null;
+    public List<Goal> findGoalById(long id) throws DaoException {
+        return executeQuery(SqlConstant.SELECT_GOALS_BY_ID.getName(), id);
     }
 
     @Override

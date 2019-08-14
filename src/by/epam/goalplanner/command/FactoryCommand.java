@@ -32,11 +32,10 @@ public class FactoryCommand {
                 break;
             }
             case ProfileCommand.PAGE: {
-                UserService userService = serviceFactory.createUserService();
                 TaskService taskService = serviceFactory.createTaskService();
                 GoalService goalService = serviceFactory.createGoalService();
                 TypeService typeService = serviceFactory.createTypeService();
-                command = new ProfileCommand(userService, goalService, taskService, typeService);
+                command = new ProfileCommand(goalService, taskService, typeService);
                 break;
             }
             case CreateGoalCommand.PAGE: {
@@ -53,6 +52,10 @@ public class FactoryCommand {
             }
             case LogoutCommand.PAGE: {
                 command = new LogoutCommand();
+                break;
+            }
+            case ChangeLanguageCommand.NAME: {
+                command = new ChangeLanguageCommand();
                 break;
             }
             default: {

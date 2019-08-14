@@ -14,15 +14,10 @@
 </head>
 <body>
 <form class="container">
-    <fmt:message key="common.message.language"/>
-    <label for="${language}">
-        <select id="language" class="form-control" name="language" onchange="submit()">
-            <option value="en" <c:if test="${language == 'en'}"> selected </c:if> ><fmt:message
-                    key="common.message.english"/></option>
-            <option value="ru" <c:if test="${language == 'ru'}"> selected </c:if> ><fmt:message
-                    key="common.message.russian"/></option>
-        </select>
-    </label>
+    <input type="hidden" name="command" value="change_language"/>
+    <button class="lang-change" value="EN" name="language">en</button>
+    <button class="lang-change" value="RU" name="language">ru</button>
 </form>
+
 </body>
 </html>

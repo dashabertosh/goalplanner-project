@@ -32,7 +32,7 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             process(req, resp);
         } catch (CommandException e) {
@@ -41,7 +41,7 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         try {
             process(req, resp);
         } catch (CommandException e) {
@@ -49,17 +49,17 @@ public class FrontController extends HttpServlet {
         }
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, CommandException {
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws  CommandException {
         String stringCmd = req.getParameter(VariableConstant.COMMAND.getName());
         try {
             FactoryCommand factoryCommand = FactoryCommand.getInstance();
             Command command = factoryCommand.create(stringCmd);
             ResultCommand resultCommand = command.execute(req);
             dispatch(req, resp, resultCommand);
-        } catch (ServiceException e) {
-            LOGGER.error("Request execution process failed", e);
-            resp.sendRedirect(VariableConstant.PROFILE_JSP.getName());
+        } catch (ServletException | IOException e) {
+            throw new CommandException(e);
         }
+
     }
 
     private void dispatch(HttpServletRequest req, HttpServletResponse resp, ResultCommand resultCommand) throws ServletException, IOException {

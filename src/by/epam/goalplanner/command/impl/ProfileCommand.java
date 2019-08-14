@@ -6,63 +6,81 @@ import by.epam.goalplanner.command.Command;
 import by.epam.goalplanner.command.GoalParametersModel;
 import by.epam.goalplanner.command.VerificationUser;
 import by.epam.goalplanner.command.VariableConstant;
-import by.epam.goalplanner.dao.DBConstant;
+import by.epam.goalplanner.dao.DbConstant;
+import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TaskService;
 import by.epam.goalplanner.service.TypeService;
-import by.epam.goalplanner.service.UserService;
+import by.epam.goalplanner.validate.Validator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class ProfileCommand implements Command {
+    private static final Logger LOGGER = LogManager.getLogger();
     public static final String PAGE = "profile";
 
-    private final UserService userService;
     private final GoalService goalService;
     private final TaskService taskService;
     private final TypeService typeService;
 
-    public ProfileCommand(UserService userService, GoalService goalService, TaskService taskService, TypeService typeService) {
-        this.userService = userService;
+    public ProfileCommand(GoalService goalService, TaskService taskService, TypeService typeService) {
         this.goalService = goalService;
         this.taskService = taskService;
         this.typeService = typeService;
     }
 
     @Override
-    public ResultCommand execute(HttpServletRequest req) throws ServiceException {
-        if (!VerificationUser.checkUser(req)) return new ResultCommand(VariableConstant.LOGIN_JSP.getName(), true);
-        if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
-            if (req.getParameter(VariableConstant.UPDATE_TASK.getName()) != null) {
-                Task task = new Task();
-                long id = Long.parseLong(req.getParameter(DBConstant.ID.getName()));
-                task.setId(id);
-                taskService.delete(task);
-            } else {
-                long id = Long.parseLong(req.getParameter(DBConstant.ID.getName()));
-                GoalParametersModel model = new GoalParametersModel();
-                long userId = Objects.requireNonNull(VerificationUser.findUser(req)).getId();
-                long typeId = typeService.findIdByName(req.getParameter(DBConstant.TYPE_NAME.getName()));
-                Goal goal = new Goal(id, model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate(), userId, typeId);
-                if (req.getParameter(VariableConstant.UPDATE_GOAL.getName()) != null) goalService.update(goal);
-                else if (req.getParameter(VariableConstant.DELETE_GOAL.getName()) != null) goalService.delete(goal);
+    public ResultCommand execute(HttpServletRequest req) throws CommandException {
+        ResultCommand result;
+        try {
+            if (!VerificationUser.checkUser(req)) return new ResultCommand(VariableConstant.LOGIN_JSP.getName(), true);
+            if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
+                LOGGER.debug("Command " + PAGE + "  began to execute.");
+                if (req.getParameter(VariableConstant.UPDATE_TASK.getName()) != null) {
+                    long id = Long.parseLong(req.getParameter(DbConstant.ID_TASK.getName()));
+                    taskService.delete(id);
+                } else {
+                    long id = Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName()));
+                    GoalParametersModel model = GoalParametersModel.getParams(req);
+                    long userId = (VerificationUser.findUser(req)).getId();
+                    long typeId = typeService.findIdTypeById(Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName())));
 
+                    String message = Validator.validateProfile(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate());
+                    if (message != null) {
+                        LOGGER.debug("Data entered incorrectly.");
+                        req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                        showInfo(req);
+                        result = new ResultCommand(VariableConstant.PROFILE_JSP.getName(), true);
+                        return result;
+                    }
+
+                    Goal goal = new Goal(id, model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate(), userId, typeId);
+                    if (req.getParameter(VariableConstant.UPDATE_GOAL.getName()) != null) {
+                        goalService.update(goal);
+                    } else if (req.getParameter(VariableConstant.DELETE_GOAL.getName()) != null) {
+                        goalService.delete(goal.getId());
+                    }
+
+                }
             }
+            showInfo(req);
+            result = new ResultCommand(VariableConstant.PROFILE_JSP.getName(), true);
+            return result;
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
-        List<Goal> goals = goalService.findAll();
+    }
+
+    private void showInfo(HttpServletRequest req) throws ServiceException {
+        List<Goal> goals = goalService.findAll(Long.toString((VerificationUser.findUser(req)).getId()));
         for (Goal goal : goals) {
             List<Task> tasks = taskService.findAll(String.valueOf(goal.getId()));
             goal.setTasks(tasks);
         }
         req.setAttribute(VariableConstant.GOALS.getName(), goals);
-        return new ResultCommand(VariableConstant.PROFILE_JSP.getName(), true);
     }
-
-
 }

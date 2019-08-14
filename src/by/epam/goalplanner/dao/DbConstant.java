@@ -1,11 +1,15 @@
 package by.epam.goalplanner.dao;
 
-public enum DBConstant {
+public enum DbConstant {
 
     LOGIN("login"),
     PASSWORD("password"),
     ID("id"),
+    ID_GOAL("id_goal"),
+    ID_TASK("id_task"),
     NAME("name"),
+    NAME_GOAL("name_goal"),
+    CREATE_TYPE("create_type"),
     DESCRIPTION("description"),
     BEGIN_DATE("begin_date"),
     DATE("date"),
@@ -18,7 +22,7 @@ public enum DBConstant {
 
     private String name;
 
-    DBConstant(String name) {
+    DbConstant(String name) {
         this.name = name;
     }
 

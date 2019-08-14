@@ -1,7 +1,6 @@
 package by.epam.goalplanner.command;
 
-import by.epam.goalplanner.beans.Goal;
-import by.epam.goalplanner.dao.DBConstant;
+import by.epam.goalplanner.dao.DbConstant;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -17,18 +16,16 @@ public class GoalParametersModel {
 
     public static GoalParametersModel getParams(HttpServletRequest req) {
         GoalParametersModel model = new GoalParametersModel();
-        model.name = req.getParameter(DBConstant.NAME.getName());
-        model.description = req.getParameter(DBConstant.DESCRIPTION.getName());
+        model.name = req.getParameter(DbConstant.NAME_GOAL.getName());
+        model.description = req.getParameter(DbConstant.DESCRIPTION.getName());
         model.beginDate = null;
         model.endDate = null;
-
         try {
-            model.beginDate = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DBConstant.BEGIN_DATE.getName()));
-            model.endDate = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DBConstant.END_DATE.getName()));
+            model.beginDate = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DbConstant.BEGIN_DATE.getName()));
+            model.endDate = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DbConstant.END_DATE.getName()));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return model;
     }
 

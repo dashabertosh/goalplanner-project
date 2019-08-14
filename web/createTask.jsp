@@ -1,13 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="t" uri="/WEB-INF/tld/footertag" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
 
 <html>
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <%--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>--%>
-    <%--    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>--%>
+        <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <title><fmt:message key="task.create.title"/></title>
 
@@ -25,7 +27,7 @@
 <body>
 <div class="container">
     <%@ include file="include/menu.jsp" %>
-    <form class="form-horizontal" action="do?command=createTask" method="POST">
+    <form id="createTask" class="form-horizontal" action="do?command=createTask" method="POST">
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
@@ -48,14 +50,14 @@
                                    placeholder="date">
                             <br>
 
-                            <label class="input" for="goal_name"><fmt:message key="task.create.goal"/></label>
-                            <select id="goal_name" name="goal_name" class="form-control">
+                            <label class="input" for="name_goal"><fmt:message key="task.create.goal"/></label>
+                            <select id="name_goal" name="name_goal" class="form-control">
                                 <c:forEach items="${goals}" var="goal">
                                     <option value="${goal.name}">
                                         <c:out value="${goal.name}"/>
                                     </option>
                                 </c:forEach>
-                                <option><fmt:message key="task.create.newGoal"/></option>
+                                <option value="1"><fmt:message key="task.create.newGoal"/></option>
                             </select>
                             <br>
                             <div class="form-group">
@@ -67,6 +69,25 @@
             </div>
         </div>
     </form>
+    <t:colontitle/>
 </div>
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous">
+</script>
+<script>
+    $('.form-control').change(function (event) {
+        if ($(this).val() === "1") {
+            document.location.href = "http://localhost:8080/goalplanner/do?command=createGoal";
+        }
+    });
+</script>
+<script>
+    var data = '<fmt:message key="${message}"/>';
+    if ('${message}' !== '') alert(data);
+</script>
 </body>
 </html>

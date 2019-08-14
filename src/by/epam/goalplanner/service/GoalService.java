@@ -12,12 +12,16 @@ public interface GoalService {
 
     List<Goal> findAll() throws ServiceException;
 
+    List<Goal> findAll(String string) throws ServiceException;
+
     boolean update(Goal goal) throws ServiceException;
 
-    boolean delete(Goal goal) throws ServiceException;
+    boolean delete(long id) throws ServiceException;
 
     boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) throws ServiceException;
 
-    long findGoalIdByName(String name) throws ServiceException;
+    Goal findGoalByName(String name) throws ServiceException;
+
+    Goal findGoalById(long id) throws ServiceException;
 }
 

@@ -26,9 +26,27 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public boolean delete(Task task) throws ServiceException {
+    public boolean delete(long id) throws ServiceException {
         try {
-            return taskDao.delete(task);
+            return taskDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteWithGoal(long goal_id) throws ServiceException {
+        try {
+            return taskDao.deleteWithGoal(goal_id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public Task findTasksById(long id) throws ServiceException {
+        try {
+            return taskDao.findTasksById(id).get(0);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
@@ -42,8 +60,6 @@ public class TaskServiceImpl implements TaskService {
             throw new ServiceException(e);
         }
     }
-
-
 
     @Override
     public boolean create(String name, String description, Date date, long goalId) throws ServiceException {

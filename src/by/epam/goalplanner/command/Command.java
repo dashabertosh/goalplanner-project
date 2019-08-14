@@ -7,5 +7,5 @@ import by.epam.goalplanner.exception.ServiceException;
 import javax.servlet.http.HttpServletRequest;
 
 public interface Command {
-    ResultCommand execute(HttpServletRequest req) throws  ServiceException, CommandException;
+    ResultCommand execute(HttpServletRequest req) throws CommandException;
 }

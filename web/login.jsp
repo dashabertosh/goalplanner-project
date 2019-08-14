@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="t" uri="/WEB-INF/tld/footertag" %>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
-
 <html>
 <head>
+    <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -50,21 +52,27 @@
                                            class="form-control" placeholder="<fmt:message key="login.password"/>">
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="<fmt:message key="login.title"/>" class="btn float-right login_btn">
+                                    <input type="submit" value="<fmt:message key="common.message.login"/>"
+                                           class="btn float-right login_btn">
                                 </div>
                             </form>
                         </div>
                         <div class="card-footer">
                             <div class="d-flex justify-content-center links">
-                                <fmt:message key="login.noAccount"/><a href="do?command=signUp"><fmt:message key="login.signUp"/></a>
+                                <fmt:message key="login.noAccount"/><a href="do?command=signUp"><fmt:message
+                                    key="login.signUp"/></a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </form>
         </fieldset>
     </form>
+    <t:colontitle/>
 </div>
+<script>
+    var data = '<fmt:message key="${message}"/>';
+    if ('${message}' !== '') alert(data);
+</script>
 </body>
 </html>

@@ -3,11 +3,12 @@ package by.epam.goalplanner.command;
 public enum  VariableConstant {
 
     COMMAND("command"),
+    MESSAGE("message"),
+    CREATE_NEW_GOAL("Create a new goal"),
+    CREATE_NEW_GOAL_RU("Создать новую цель"),
     POST("POST"),
     NEW_TYPE("newType"),
     TYPES("types"),
-    CREATE_EN("Create a new category"),
-    CREATE_RU("Создать новую категорию"),
     CREATE_GOAL_JSP("createGoal.jsp"),
     CREATE_TASK_JSP("createTask.jsp"),
     SIGN_UP_JSP("signUp.jsp"),

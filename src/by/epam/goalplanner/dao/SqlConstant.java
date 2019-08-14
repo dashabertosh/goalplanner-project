@@ -1,36 +1,40 @@
 package by.epam.goalplanner.dao;
 
 public enum SqlConstant {
-    WHERE_ID("WHERE id=%d"),
-
     GET_ALL_GOALS_WHERE("SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
-            " `user_id`, `type_id` FROM `goal` ?"),
+            " `user_id`, `type_id` FROM `goal` WHERE `user_id` = ?"),
     GET_GOALS_BY_DATE("SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
             " `user_id`, `type_id` FROM `goal` WHERE `begin_date` = ? AND `end_date` = ?"),
     CREATE_GOAL("INSERT INTO `goal` (`name`, `description`, `begin_date`, `end_date`, " +
             "`user_id`, `type_id`) VALUES (?, ?, ?, ?, ?, ?)"),
-    UPDATE_GOAL("UPDATE `goal` SET `name` = '?', `description` = ?, " +
+    UPDATE_GOAL("UPDATE `goal` SET `name` = ?, `description` = ?, " +
             "`begin_date` = ?, `end_date` = ?, `user_id` = ?, `type_id` = ? WHERE `goal`.`id` = ?"),
     DELETE_GOAL("DELETE FROM `goal` WHERE `goal`.`id` = ?"),
     GET_ALL_GOALS("SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
-            " `user_id`, `type_id` FROM `goal`"),
+            " `user_id`, `type_id` FROM `goal` "),
     GET_GOALS_BY_NAME("SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
             " `user_id`, `type_id` FROM `goal` WHERE `name` = ?"),
+    SELECT_GOALS_BY_ID("SELECT `id`, `name`, `description`, `begin_date`, `end_date`," +
+            " `user_id`, `type_id` FROM `goal` WHERE `id` = ?"),
+    SELECT_TYPE_BY_ID("SELECT `type`.`id`, `type`.`name` FROM `type` inner join `goal` on " +
+            "`type`.`id` = `goal`.`type_id` where `goal`.`id` = ?"),
 
     SELECT_ALL_TASK_WHERE("SELECT `id`, `name`, `description`, `date`, `goal_id` FROM `task` WHERE `task`.`goal_id` = ?"),
     GET_TASKS_BY_DATE("SELECT `id`, `name`, `description`, `date`, `goal_id`" +
             " FROM `task` WHERE `date` = ?"),
+    GET_TASK_BY_ID("SELECT id, `name`, `description`, `date`, `goal_id` FROM `task` WHERE `id` = ?"),
     CREATE_TASK("INSERT INTO `task` (`name`, `description`, `date`, `goal_id`) VALUES (?, ?, ?, ?)"),
     UPDATE_TASK("UPDATE `task` SET `name` = ?, `description` = ?, `date` = ?, " +
             "`goal_id` = ?, `done` = ? WHERE `task`.`id` = ?"),
     DELETE_TASK("DELETE FROM `task` WHERE `task`.`id` = ?"),
+    DELETE_TASK_WITH_GOAL("DELETE FROM `task` WHERE `goal_id` = ?"),
 
     SELECT_ALL_TYPES_WHERE("SELECT `id`, `name` FROM `type` ?"),
     SELECT_ALL_TYPES("SELECT `id`, `name` FROM `type`"),
     CREATE_TYPE("INSERT INTO `type` (`name`) VALUES (?)"),
     UPDATE_TYPE("UPDATE `type` SET `name` = ? WHERE `type`.`id` = ?"),
     DELETE_TYPE("DELETE FROM `type` WHERE `type`.`id` = ?"),
-    SELECT_TYPE_ID_BY_NAME("SELECT `id`, `name` FROM `type` WHERE `name` = ?"),
+    SELECT_ID_BY_NAME("SELECT `id`, `name` FROM `type` WHERE `name` = ?"),
 
     FIND_USER_BY_NAME("SELECT name FROM `user` WHERE user.name = ?"),
     SELECT_ALL_USERS_WHERE("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user` ?"),

@@ -43,10 +43,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean create(String login, String password, String name) throws ServiceException {
         try {
-            return userDao.create(login, password, name);
+            Optional<User> currentUser = userDao.findUserByLoginAndPassword(login, password);
+            if (!currentUser.isPresent()) {
+                return userDao.create(login, password, name);
+            } else {
+                return false; // FIXME: 12.08.2019 
+            }
         } catch (DaoException e) {
             throw new ServiceException(e);
         }
+
     }
 
     @Override

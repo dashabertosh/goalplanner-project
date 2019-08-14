@@ -1,14 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="t" uri="/WEB-INF/tld/footertag" %>
+<fmt:setLocale value="${sessionScope.language}"/>
 <fmt:setBundle basename="locale"/>
-<!------ Include the above in your HEAD tag ---------->
-
-<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <title><fmt:message key="signUp.title"/></title>
 
     <!--Bootsrap 4 CDN-->
@@ -23,10 +24,10 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-<%@ include file="include/head.jsp" %>
 <div class="container">
     <%@ include file="include/menu.jsp" %>
     <form class="form-horizontal" action="do?command=signUp" method="POST">
+        <fieldset>
         <div class="container">
             <div class="d-flex justify-content-center h-100">
                 <div class="card">
@@ -59,16 +60,21 @@
                                        placeholder="<fmt:message key="signUp.password"/>">
                             </div>
                             <div class="form-group">
-                                <button id="signUp" name="signUp" class="btn float-right login_btn"><fmt:message
-                                        key="signUp.sgnUp"/></button>
+                                <input type="submit" value="<fmt:message key="signUp.sgnUp"/>" class="btn float-right login_btn">
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        </fieldset>
     </form>
+    <t:colontitle/>
 </div>
+<script>
+    var data = '<fmt:message key="${message}"/>';
+    if ('${message}' !== '') alert(data);
+</script>
 </body>
 </html>
 

@@ -31,7 +31,8 @@ public class ServiceFactory {
 
     public GoalService createGoalService() {
         GoalDao goalDao = daoFactory.createGoalDao();
-        return new GoalServiceImpl(goalDao);
+        TaskDao taskDao = daoFactory.createTaskDao();
+        return new GoalServiceImpl(goalDao, taskDao);
     }
 
     public TypeService createTypeService() {

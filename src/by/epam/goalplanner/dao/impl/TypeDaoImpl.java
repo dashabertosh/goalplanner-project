@@ -25,20 +25,19 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
 
     @Override
     public long findIdByName(String name) throws DaoException {
-        List<Type> type = executeQuery(SqlConstant.SELECT_TYPE_ID_BY_NAME.getName(), name);
+        List<Type> type = executeQuery(SqlConstant.SELECT_ID_BY_NAME.getName(), name);
         return type.get(0).getId();
     }
 
     @Override
-    public boolean delete(Type type) throws DaoException {
-        return executeUpdate(SqlConstant.DELETE_TYPE.getName(), type.getId());
+    public long findIdTypeById(long id) throws DaoException {
+        List<Type> type = executeQuery(SqlConstant.SELECT_TYPE_BY_ID.getName(), id);
+        return type.get(0).getId();
     }
 
     @Override
-    public Type read(long id) throws DaoException {
-        String sqlSuffix = String.format(SqlConstant.WHERE_ID.getName(), id);
-        List<Type> all = getAll(sqlSuffix);
-        return all.size() > 0 ? all.get(0) : null;
+    public boolean delete(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_TYPE.getName(), id);
     }
 
     @Override

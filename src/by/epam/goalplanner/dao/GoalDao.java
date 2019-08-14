@@ -11,5 +11,7 @@ public interface GoalDao extends BaseDao<Goal> {
 
     List<Goal> findGoalByName(String name) throws DaoException;
 
+    List<Goal> findGoalById(long id) throws DaoException;
+
     boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) throws DaoException;
 }

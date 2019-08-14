@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface TaskDao extends BaseDao<Task> {
-    List<Task> findTasksByDate(long date) throws DaoException;
+    List<Task> findTasksById(long id) throws DaoException;
 
     boolean create(String name, String description, Date date, long goalId) throws DaoException;
+
+    boolean deleteWithGoal(long goal_id) throws DaoException;
 }

@@ -13,4 +13,6 @@ public interface TypeService {
     boolean create(String name) throws ServiceException;
 
     long findIdByName(String name) throws ServiceException;
+
+    long findIdTypeById(long id) throws ServiceException;
 }

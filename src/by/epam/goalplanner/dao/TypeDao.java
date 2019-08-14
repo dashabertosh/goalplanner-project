@@ -9,4 +9,6 @@ public interface TypeDao extends BaseDao<Type> {
     boolean create(String name) throws DaoException;
 
     long findIdByName(String name) throws DaoException;
+
+    long findIdTypeById(long id) throws DaoException;
 }
