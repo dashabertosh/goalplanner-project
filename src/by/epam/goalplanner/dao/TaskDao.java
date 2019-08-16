@@ -11,5 +11,7 @@ public interface TaskDao extends BaseDao<Task> {
 
     boolean create(String name, String description, Date date, long goalId) throws DaoException;
 
-    boolean deleteWithGoal(long goal_id) throws DaoException;
+    boolean deleteWithGoal(long goalId) throws DaoException;
+
+    boolean deleteWithGoalUser(long goalId) throws DaoException;
 }

@@ -18,6 +18,8 @@ public enum  VariableConstant {
     UPDATE_TASK("update_task"),
     FORMAT_DATE("yyyy-MM-dd"),
     UPDATE_GOAL("update_goal"),
+    UPDATE("update"),
+    DELETE("delete"),
     DELETE_GOAL("delete_goal"),
     GOALS("goals"),
     USER("user"),

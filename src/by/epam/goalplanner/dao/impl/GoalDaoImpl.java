@@ -39,6 +39,16 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     }
 
     @Override
+    public boolean deleteWithUser(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_WITH_USER.getName(), id);
+    }
+
+    @Override
+    public boolean deleteWithGoal(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_TASK_WITH_GOAL.getName(), id);
+    }
+
+    @Override
     public List<Goal> findGoalById(long id) throws DaoException {
         return executeQuery(SqlConstant.SELECT_GOALS_BY_ID.getName(), id);
     }

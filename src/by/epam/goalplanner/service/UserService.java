@@ -18,4 +18,6 @@ public interface UserService {
     List<User> login(String login, String password) throws ServiceException;
 
     boolean create(String login, String password, String name) throws ServiceException;
+
+    List<User> findUserByLoginAndPassword(String login, String password) throws ServiceException;
 }

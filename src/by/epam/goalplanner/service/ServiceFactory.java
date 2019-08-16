@@ -22,7 +22,9 @@ public class ServiceFactory {
     public UserService createUserService() {
         UserDao userDao = daoFactory.createUserDao();
         RoleDao roleDao = daoFactory.createRoleDao();
-        return new UserServiceImpl(userDao, roleDao);
+        TaskDao taskDao = daoFactory.createTaskDao();
+        GoalDao goalDao = daoFactory.createGoalDao();
+        return new UserServiceImpl(userDao, roleDao, goalDao, taskDao);
     }
 
     public TaskService createTaskService() {

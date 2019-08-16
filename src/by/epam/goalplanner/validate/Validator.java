@@ -1,9 +1,6 @@
 package by.epam.goalplanner.validate;
 
 import by.epam.goalplanner.beans.Goal;
-import by.epam.goalplanner.command.VariableConstant;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 public class Validator {
@@ -11,15 +8,15 @@ public class Validator {
     private static final String REGULAR_LOGIN = "^[a-zA-Z][a-zA-Z0-9-_\\.]{1,20}$";
 
     public static String validateSignUp(String name, String login, String password) {
-        if (name.isEmpty()) {
+        if (name.trim().isEmpty()) {
             return ValidateConstant.NAME_EMPTY.getName();
         }
 
-        if (login.isEmpty()) {
+        if (login.trim().isEmpty()) {
             return ValidateConstant.LOGIN_EMPTY.getName();
         }
 
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             return ValidateConstant.PASSWORD_EMPTY.getName();
         }
 
@@ -39,11 +36,11 @@ public class Validator {
     }
 
     public static String validateLogin(String login, String password) {
-        if (login.isEmpty()) {
+        if (login.trim().isEmpty()) {
             return ValidateConstant.LOGIN_EMPTY.getName();
         }
 
-        if (password.isEmpty()) {
+        if (password.trim().isEmpty()) {
             return ValidateConstant.PASSWORD_EMPTY.getName();
         }
 
@@ -51,11 +48,11 @@ public class Validator {
     }
 
     public static String validateProfile(String name, String description, Date beginDate, Date endDate) {
-        if (name.isEmpty()) {
+        if (name.trim().isEmpty()) {
             return ValidateConstant.NAME_GOAL_OR_TASK_EMPTY.getName();
         }
 
-        if (description.isEmpty()) {
+        if (description.trim().isEmpty()) {
             return ValidateConstant.DESCRIPTION_EMPTY.getName();
         }
 
@@ -83,16 +80,16 @@ public class Validator {
     }
 
     public static String validateCreateTask(String name, String description, Date date, Goal goal) {
-        if (name.isEmpty()) {
+        if (name.trim().isEmpty()) {
             return ValidateConstant.NAME_GOAL_OR_TASK_EMPTY.getName();
         }
 
-        if (description.isEmpty()) {
+        if (description.trim().isEmpty()) {
             return ValidateConstant.DESCRIPTION_EMPTY.getName();
         }
 
-        if (date == null) {
-            return ValidateConstant.TASK_DATE_EMPTY.getName();
+        if (date.getTime() > 2147483647) {
+            return ValidateConstant.TASK_DATE_BIG.getName();
         }
 
         if ((date.getTime() < goal.getBeginDate().getTime()) || date.getTime() > goal.getEndDate().getTime()) {

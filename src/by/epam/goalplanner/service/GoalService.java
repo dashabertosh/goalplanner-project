@@ -18,6 +18,8 @@ public interface GoalService {
 
     boolean delete(long id) throws ServiceException;
 
+    boolean deleteWithUser(long id) throws ServiceException;
+
     boolean create(String name, String description, Date beginDate, Date endDate, long userId, long typeId) throws ServiceException;
 
     Goal findGoalByName(String name) throws ServiceException;

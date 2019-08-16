@@ -16,6 +16,10 @@ footer {
     color: white;
 }
 
+.desc{
+    color: white;
+}
+
 .container{
     min-height: 100%;
     position: relative;

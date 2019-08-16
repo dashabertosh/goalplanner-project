@@ -26,6 +26,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
+    public boolean deleteWithUser(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_WITH_USER.getName(), id);
+    }
+
+    @Override
     public boolean update(User user) throws DaoException {
         return executeUpdate(SqlConstant.UPDATE_USER.getName(),
                 user.getLogin(),
@@ -46,13 +51,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public List<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
+    public List<User> login(String login, String password) throws DaoException {
         try {
             String hashPassword = Hasher.getHash(password);
             return executeQuery(SqlConstant.SELECT_USER_BY_LOGIN_AND_PASSWORD.getName(), login, hashPassword);
         } catch (CommandException e) {
             throw new DaoException(e);
         }
+    }
 
+    @Override
+    public List<User> findUserByLoginAndPassword(String login, String password) throws DaoException {
+        return executeQuery(SqlConstant.SELECT_USER_BY_LOGIN_AND_PASSWORD.getName(), login, password);
     }
 }

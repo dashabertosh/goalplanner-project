@@ -12,7 +12,7 @@ public interface TaskService{
 
     boolean delete(long id) throws ServiceException;
 
-    boolean deleteWithGoal(long goal_id) throws ServiceException;
+    boolean deleteWithGoal(long goalId) throws ServiceException;
 
     List<Task> findAll(String string) throws ServiceException;
 

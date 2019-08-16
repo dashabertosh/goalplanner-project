@@ -9,6 +9,7 @@ import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TaskService;
+import by.epam.goalplanner.validate.ValidateConstant;
 import by.epam.goalplanner.validate.Validator;
 import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +46,13 @@ public class CreateTaskCommand implements Command {
                 }
                 String name = req.getParameter(DbConstant.NAME.getName());
                 String description = req.getParameter(DbConstant.DESCRIPTION.getName());
+                if(req.getParameter(DbConstant.DATE.getName()) == "") {
+                    String message = ValidateConstant.TASK_DATE_EMPTY.getName();
+                    req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                    showInfo(req);
+                    result = new ResultCommand(VariableConstant.CREATE_TASK_JSP.getName(), true);
+                    return result;
+                }
                 Date date = new SimpleDateFormat(VariableConstant.FORMAT_DATE.getName()).parse(req.getParameter(DbConstant.DATE.getName()));
                 Goal goal = goalService.findGoalByName(goalName);
 

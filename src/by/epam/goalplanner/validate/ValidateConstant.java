@@ -10,11 +10,13 @@ public enum ValidateConstant {
     NO_USER("common.message.no.user"),
     NAME_GOAL_OR_TASK_EMPTY("common.message.name.empty"),
     DESCRIPTION_EMPTY("common.message.description.empty"),
+    FIELDS_NULL("common.message.null"),
     DESCRIPTION_NOT_CORRECT("common.message.description.not.correct"),
     BEGIN_DATE_EMPTY("common.message.begin.date.empty"),
     END_DATE_EMPTY("common.message.end.date.empty"),
     DATES_NOT_CORRECT("common.message.dates.not.correct"),
     TASK_DATE_EMPTY("common.message.date.empty"),
+    TASK_DATE_BIG("common.message.date.is.big"),
     TASK_DATE_NOT_CORRECT("common.message.task.date.not.correct"),
     USER_EXIST("common.message.user.exist"),
     ;

@@ -18,16 +18,16 @@ public enum SqlConstant {
             " `user_id`, `type_id` FROM `goal` WHERE `id` = ?"),
     SELECT_TYPE_BY_ID("SELECT `type`.`id`, `type`.`name` FROM `type` inner join `goal` on " +
             "`type`.`id` = `goal`.`type_id` where `goal`.`id` = ?"),
+    DELETE_WITH_USER("DELETE FROM goal WHERE user_id IN (?)"),
 
     SELECT_ALL_TASK_WHERE("SELECT `id`, `name`, `description`, `date`, `goal_id` FROM `task` WHERE `task`.`goal_id` = ?"),
-    GET_TASKS_BY_DATE("SELECT `id`, `name`, `description`, `date`, `goal_id`" +
-            " FROM `task` WHERE `date` = ?"),
     GET_TASK_BY_ID("SELECT id, `name`, `description`, `date`, `goal_id` FROM `task` WHERE `id` = ?"),
     CREATE_TASK("INSERT INTO `task` (`name`, `description`, `date`, `goal_id`) VALUES (?, ?, ?, ?)"),
     UPDATE_TASK("UPDATE `task` SET `name` = ?, `description` = ?, `date` = ?, " +
             "`goal_id` = ?, `done` = ? WHERE `task`.`id` = ?"),
     DELETE_TASK("DELETE FROM `task` WHERE `task`.`id` = ?"),
     DELETE_TASK_WITH_GOAL("DELETE FROM `task` WHERE `goal_id` = ?"),
+    DELETE_WITH_USER_GOAL("DELETE FROM task WHERE goal_id IN (SELECT `id` FROM `goal` WHERE user_id in (?))"),
 
     SELECT_ALL_TYPES_WHERE("SELECT `id`, `name` FROM `type` ?"),
     SELECT_ALL_TYPES("SELECT `id`, `name` FROM `type`"),
@@ -41,7 +41,7 @@ public enum SqlConstant {
     SELECT_ALL_USERS("SELECT `id`, `login`, `password`, `name`, `role_id` FROM `user`"),
     CREATE_USER("INSERT INTO `user` (`login`, `password`, `name`,  `role_id`) VALUES (?, ?, ?, ?)"),
     DELETE_USER("DELETE FROM `user` WHERE `goalplanner`.`user`.`id` = ?"),
-    UPDATE_USER("UPDATE `user` SET `login` = ?, `password` = ?, `name` = ?, `roles_id` = ? WHERE `user`.`id` = ?"),
+    UPDATE_USER("UPDATE `user` SET `login` = ?, `password` = ?, `name` = ?, `role_id` = ? WHERE `user`.`id` = ?"),
     SELECT_USER_BY_LOGIN_AND_PASSWORD("SELECT id, login, password, name, role_id FROM `user` WHERE user.login = ? AND user.password = ?");
 
     private String name;

@@ -48,12 +48,12 @@
                     <div class="card-body">
                         <form>
                             <label class="input" for="name"><fmt:message key="task.create.name"/></label>
-                            <input id="name" name="name" type="text" class="form-control" placeholder="name">
+                            <input id="name" name="name" type="text" class="form-control" placeholder="<fmt:message key="task.create.field.name"/>">
                             <br>
 
                             <label class="input" for="description"><fmt:message key="task.create.description"/></label>
                             <textarea id="description" name="description" class="form-control"
-                                      placeholder="description"></textarea>
+                                      placeholder="<fmt:message key="task.create.field.description"/>"></textarea>
                             <br>
 
                             <label class="input" for="date"><fmt:message key="task.create.date"/></label>

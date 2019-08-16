@@ -11,6 +11,7 @@ import by.epam.goalplanner.exception.CommandException;
 import by.epam.goalplanner.exception.ServiceException;
 import by.epam.goalplanner.service.GoalService;
 import by.epam.goalplanner.service.TypeService;
+import by.epam.goalplanner.validate.ValidateConstant;
 import by.epam.goalplanner.validate.Validator;
 import by.epam.goalplanner.validate.XssProtection;
 import org.apache.logging.log4j.LogManager;
@@ -39,7 +40,13 @@ public class CreateGoalCommand implements Command {
                 LOGGER.debug("Command " + PAGE + "  began to execute.");
                 if (req.getParameter(DbConstant.CREATE_TYPE.getName()) != null) {
                     String newType = req.getParameter(VariableConstant.NEW_TYPE.getName());
-
+                    if (newType.trim().isEmpty()) {
+                        String message = ValidateConstant.FIELDS_NULL.getName();
+                        req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                        showInfo(req);
+                        result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                        return result;
+                    }
                     typeService.create(newType);
                     showInfo(req);
                     result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);

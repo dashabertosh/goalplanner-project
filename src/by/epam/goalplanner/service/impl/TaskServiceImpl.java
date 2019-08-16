@@ -35,9 +35,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public boolean deleteWithGoal(long goal_id) throws ServiceException {
+    public boolean deleteWithGoal(long goalId) throws ServiceException {
         try {
-            return taskDao.deleteWithGoal(goal_id);
+            return taskDao.deleteWithGoal(goalId);
         } catch (DaoException e) {
             throw new ServiceException(e);
         }

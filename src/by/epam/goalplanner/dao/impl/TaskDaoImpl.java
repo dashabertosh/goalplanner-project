@@ -31,8 +31,13 @@ public class TaskDaoImpl extends AbstractDao<Task> implements TaskDao {
     }
 
     @Override
-    public boolean deleteWithGoal(long goal_id) throws DaoException {
-        return executeUpdate(SqlConstant.DELETE_TASK_WITH_GOAL.getName(), goal_id);
+    public boolean deleteWithGoal(long goaId) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_TASK_WITH_GOAL.getName(), goaId);
+    }
+
+    @Override
+    public boolean deleteWithGoalUser(long goalId) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_WITH_USER_GOAL.getName(), goalId);
     }
 
     @Override

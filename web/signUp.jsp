@@ -22,6 +22,11 @@
 
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .desc{
+            color: white;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -58,6 +63,7 @@
                                 </div>
                                 <input id="password" name="password" type="password" class="form-control"
                                        placeholder="<fmt:message key="signUp.password"/>">
+                                <label class="desc"><fmt:message key="signUp.label.password"/></label>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="<fmt:message key="signUp.sgnUp"/>" class="btn float-right login_btn">

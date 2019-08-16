@@ -91,4 +91,13 @@ public class GoalServiceImpl implements GoalService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean deleteWithUser(long id) throws ServiceException {
+        try {
+            return goalDao.deleteWithUser(id);
+        } catch (DaoException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

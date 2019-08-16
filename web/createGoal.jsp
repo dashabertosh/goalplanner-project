@@ -29,8 +29,7 @@
             width: 30px; /* Ширина кнопки */
             height: 30px; /* Высота */
             align-content: center;
-            border-radius: 30px;
-        }
+            border-radius: 30px;}
     </style>
 </head>
 <body>
@@ -48,12 +47,12 @@
                         <div class="card-body">
                             <form>
                                 <label class="input" for="name_goal"><fmt:message key="goal.create.name"/></label>
-                                <input id="name_goal" name="name_goal" type="text" class="form-control" placeholder="name">
+                                <input id="name_goal" name="name_goal" type="text" class="form-control" placeholder="<fmt:message key="goal.create.field.name"/>">
                                 <br>
                                 <label class="input" for="description"><fmt:message
                                         key="goal.create.description"/></label>
                                 <textarea id="description" name="description" class="form-control"
-                                          placeholder="description"> </textarea>
+                                          placeholder="<fmt:message key="goal.create.field.description"/>"></textarea>
                                 <br>
                                 <label class="input" for="begin_date"><fmt:message key="goal.create.beginDate"/></label>
                                 <input id="begin_date" name="begin_date" type="date" class="form-control"

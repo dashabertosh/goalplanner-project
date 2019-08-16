@@ -32,13 +32,15 @@ public class AdminCommand implements Command {
             if (!VerificationUser.checkUser(req)) return new ResultCommand(VariableConstant.LOGIN_JSP.getName(), true);
             if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
                 LOGGER.debug("Command " + PAGE + "  began to execute.");
+                long id = Long.parseLong(req.getParameter(DbConstant.ID.getName()));
                 String login = req.getParameter(DbConstant.LOGIN.getName());
                 String password = req.getParameter(DbConstant.PASSWORD.getName());
-
-                User user = userService.login(login, password).get(0);
-                if (req.getParameter(VariableConstant.UPDATE_GOAL.getName()) != null) {
+                String name = req.getParameter(DbConstant.NAME.getName());
+                long roleId = Long.parseLong(req.getParameter(DbConstant.ROLE_ID.getName()));
+                User user = new User(id, login, password, name, roleId);
+                if (req.getParameter(VariableConstant.UPDATE.getName()) != null) {
                     userService.update(user);
-                } else if (req.getParameter(VariableConstant.DELETE_GOAL.getName()) != null) {
+                } else if (req.getParameter(VariableConstant.DELETE.getName()) != null) {
                     userService.delete(user.getId());
                 }
             }
