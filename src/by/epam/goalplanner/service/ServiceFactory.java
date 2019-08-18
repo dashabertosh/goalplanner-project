@@ -40,6 +40,7 @@ public class ServiceFactory {
 
     public TypeService createTypeService() {
         TypeDao typeDao = daoFactory.createTypeDao();
-        return new TypeServiceImpl(typeDao);
+        GoalDao goalDao = daoFactory.createGoalDao();
+        return new TypeServiceImpl(typeDao, goalDao);
     }
 }

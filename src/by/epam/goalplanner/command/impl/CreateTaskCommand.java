@@ -21,6 +21,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * CreateTaskCommand page
+ *
+ * @author Dasha Lobkova on 2019-07-16.
+ * @version 0.0.1
+ */
+
 public class CreateTaskCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
     public static final String PAGE = "createTask";
@@ -33,6 +40,14 @@ public class CreateTaskCommand implements Command {
         this.taskService = taskService;
     }
 
+    /**
+     *
+     * @param req DTO containing all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResultCommand} that
+     * forward to {@link CreateTaskCommand}.PAGE
+     *
+     * @throws CommandException
+     */
     @Override
     public ResultCommand execute(HttpServletRequest req) throws CommandException {
         ResultCommand result;
@@ -40,7 +55,7 @@ public class CreateTaskCommand implements Command {
             if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
                 LOGGER.debug("Command " + PAGE + "  began to execute.");
                 String goalName = req.getParameter(DbConstant.NAME_GOAL.getName());
-                if (goalName.equalsIgnoreCase(VariableConstant.CREATE_NEW_GOAL.getName()) || goalName.equalsIgnoreCase(VariableConstant.CREATE_NEW_GOAL_RU.getName())) {
+                if (goalName.equalsIgnoreCase("1")) {
                     result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
                     return result;
                 }

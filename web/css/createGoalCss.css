@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Numans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html,body{
-    background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+    background-image: url(bg-image.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
-    font-family: 'Numans', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .container{
@@ -14,7 +14,7 @@ html,body{
 }
 
 .row{
-    font-family: 'Numans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: white;
 }
 
@@ -98,7 +98,7 @@ input:focus{
 }
 
 .login_btn{
-    font-family: 'Numans', sans-serif;
+    font-family: 'Roboto', sans-serif;
     color: black;
     background-color: #FFC312;
     width: 100px;

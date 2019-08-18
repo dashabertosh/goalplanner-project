@@ -41,7 +41,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                                     </div>
-                                    <input id="login" name="login" value="dasha35" type="text" class="form-control"
+                                    <input id="login" name="login" type="text" class="form-control"
                                            placeholder="<fmt:message key="login.login"/>">
 
                                 </div>
@@ -49,7 +49,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                                     </div>
-                                    <input id="password" name="password" value="111111" type="password"
+                                    <input id="password" name="password" type="password"
                                            class="form-control" placeholder="<fmt:message key="login.password"/>">
                                 </div>
                                 <div class="form-group">

@@ -14,6 +14,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * AdminCommand page
+ *
+ * @author Dasha Lobkova on 2019-07-04.
+ * @version 0.0.1
+ */
+
 public abstract class AbstractDao<T> implements BaseDao<T> {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -22,6 +29,14 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
     AbstractDao(Builder<T> builder) {
         this.builder = builder;
     }
+
+    /**
+     *
+     * @param sql string request
+     * @param params parameters for request
+     * @return completed state
+     * @throws DaoException
+     */
 
     protected boolean executeUpdate(String sql, Object... params) throws DaoException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();
@@ -36,6 +51,14 @@ public abstract class AbstractDao<T> implements BaseDao<T> {
             ConnectionPool.getInstance().releaseConnection(connection);
         }
     }
+
+    /**
+     *
+     * @param query string request
+     * @param params parameters for request
+     * @return completed state
+     * @throws DaoException
+     */
 
     protected List<T> executeQuery(String query, Object... params) throws DaoException {
         ProxyConnection connection = ConnectionPool.getInstance().getConnection();

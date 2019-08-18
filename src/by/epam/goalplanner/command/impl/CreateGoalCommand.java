@@ -18,7 +18,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+/**
+ *
+ */
 
 public class CreateGoalCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -32,55 +38,93 @@ public class CreateGoalCommand implements Command {
         this.goalService = goalService;
     }
 
+    /**
+     * @param req
+     * @return instance of {@link ResultCommand} that
+     * forward to {@link ProfileCommand}.PAGE with list of tracks in attributes
+     * @throws CommandException
+     */
+
     @Override
     public ResultCommand execute(HttpServletRequest req) throws CommandException {
         ResultCommand result;
         try {
+            User user = VerificationUser.findUser(req);
+            List<Type> defaultTypes = typeService.findSomeTypes();
+            List<Type> list = typeService.findAll(user.getId());
+            Set<Type> types = new HashSet<>(list);
             if (VariableConstant.POST.getName().equalsIgnoreCase(req.getMethod())) {
                 LOGGER.debug("Command " + PAGE + "  began to execute.");
-                if (req.getParameter(DbConstant.CREATE_TYPE.getName()) != null) {
+                if (req.getParameter(VariableConstant.DELETE_TYPE.getName()) != null) {
+                    String typeName = req.getParameter(DbConstant.TYPE_NAME.getName());
+                    if (typeName.equalsIgnoreCase("1")) {
+                        String message = ValidateConstant.CANT_DELETE.getName();
+                        req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                        showInfo(req, types, defaultTypes);
+                        result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                        return result;
+                    }
+                    long typeId = typeService.findIdByName(typeName);
+                    Type tempType = new Type(typeId, typeName);
+                    if (defaultTypes.contains(tempType)) {
+                        String message = ValidateConstant.CANT_DELETE.getName();
+                        req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                        showInfo(req, types, defaultTypes);
+                        result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                        return result;
+                    } else {
+                        typeService.delete(typeId);
+                        types.remove(tempType);
+                        showInfo(req, types, defaultTypes);
+                        result = new ResultCommand(VariableConstant.DO_COMMAND_CREATE_GOAL.getName(), false);
+                        return result;
+                    }
+                } else if (req.getParameter(DbConstant.CREATE_TYPE.getName()) != null) {
                     String newType = req.getParameter(VariableConstant.NEW_TYPE.getName());
                     if (newType.trim().isEmpty()) {
                         String message = ValidateConstant.FIELDS_NULL.getName();
                         req.setAttribute(VariableConstant.MESSAGE.getName(), message);
-                        showInfo(req);
+                        showInfo(req, types, defaultTypes);
                         result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
                         return result;
                     }
-                    typeService.create(newType);
-                    showInfo(req);
-                    result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
-                    return result;
-                }
-                GoalParametersModel model = GoalParametersModel.getParams(req);
-                User user = VerificationUser.findUser(req);
-                if (user != null) {
-                    try {
-                        String type = req.getParameter(DbConstant.TYPE_NAME.getName());
-                        long typeId = typeService.findIdByName(type);
-
-                        XssProtection protection = XssProtection.profileProtection(model.getName(), model.getDescription());
-                        String message = Validator.validateProfile(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate());
-                        if (message != null) {
-                            LOGGER.debug("Data entered incorrectly.");
+                    for (int i = 0; i < defaultTypes.size() - 1; i++) {
+                        if (newType.equals(defaultTypes.get(i).getName())) {
+                            String message = ValidateConstant.TYPE_EXIST.getName();
                             req.setAttribute(VariableConstant.MESSAGE.getName(), message);
-                            showInfo(req);
+                            showInfo(req, types, defaultTypes);
                             result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
                             return result;
                         }
-
-                        goalService.create(protection.getName(), protection.getDescription(), model.getBeginDate(), model.getEndDate(), user.getId(), typeId);
-                    } catch (ServiceException e) {
-                        throw new CommandException(e);
                     }
-                    result = new ResultCommand(VariableConstant.DO_COMMAND_PROFILE.getName(), false);
+                    typeService.create(newType);
+                    long typeId = typeService.findIdByName(newType);
+                    Type tempType = new Type(typeId, newType);
+                    types.add(tempType);
+                    showInfo(req, types, defaultTypes);
+                    result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
                     return result;
+                } else {
+                    GoalParametersModel model = GoalParametersModel.getParams(req);
+                    String type = req.getParameter(DbConstant.TYPE_NAME.getName());
+
+                    XssProtection protection = XssProtection.profileProtection(model.getName(), model.getDescription());
+                    String message = Validator.validateCreateGoal(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate(), type);
+                    if (message != null) {
+                        LOGGER.debug("Data entered incorrectly.");
+                        req.setAttribute(VariableConstant.MESSAGE.getName(), message);
+                        showInfo(req, types, defaultTypes);
+                        result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                        return result;
+                    }
+                    long typeId = typeService.findIdByName(type);
+                    goalService.create(protection.getName(), protection.getDescription(), model.getBeginDate(), model.getEndDate(), user.getId(), typeId);
                 }
+                result = new ResultCommand(VariableConstant.DO_COMMAND_PROFILE.getName(), false);
+                return result;
             }
 
-            List<Type> types = typeService.findAll();
-            req.setAttribute(VariableConstant.TYPES.getName(), types);
-
+            showInfo(req, types, defaultTypes);
             result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
             return result;
         } catch (ServiceException e) {
@@ -88,9 +132,8 @@ public class CreateGoalCommand implements Command {
         }
     }
 
-    private void showInfo(HttpServletRequest req) throws ServiceException {
-        List<Type> types = typeService.findAll();
-        req.setAttribute(VariableConstant.TYPES.getName(), types);
+    private void showInfo(HttpServletRequest req, Set<Type> set, List<Type> defaultTypes) throws ServiceException {
+        set.addAll(defaultTypes);
+        req.setAttribute(VariableConstant.TYPES.getName(), set);
     }
-
 }

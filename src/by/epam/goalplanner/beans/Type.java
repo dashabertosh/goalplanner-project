@@ -35,4 +35,14 @@ public class Type {
                 ", name='" + name + '\'' +
                 '}';
     }
+
+    @Override
+    public int hashCode() {
+        return (int) this.id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return ((Type) obj).id == this.id && ((Type) obj).name.equals(this.name);
+    }
 }

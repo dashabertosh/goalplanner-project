@@ -30,9 +30,6 @@ public class XssProtection {
         return protection;
     }
 
-
-
-
     public String getLogin() {
         return login;
     }

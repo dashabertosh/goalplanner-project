@@ -23,13 +23,17 @@
     <!--Custom styles-->
     <link rel="stylesheet" type="text/css" href="css/createGoalCss.css">
     <style>
-        .lang-change{
+        .lang-change {
             background: #FFC312; /* Цвет фона */
             border: 1px solid #7a7b7e; /* Параметры рамки */
             width: 30px; /* Ширина кнопки */
             height: 30px; /* Высота */
             align-content: center;
-            border-radius: 30px;}
+            border-radius: 30px;
+        }
+        .opp{
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -47,7 +51,8 @@
                         <div class="card-body">
                             <form>
                                 <label class="input" for="name_goal"><fmt:message key="goal.create.name"/></label>
-                                <input id="name_goal" name="name_goal" type="text" class="form-control" placeholder="<fmt:message key="goal.create.field.name"/>">
+                                <input id="name_goal" name="name_goal" type="text" class="form-control"
+                                       placeholder="<fmt:message key="goal.create.field.name"/>">
                                 <br>
                                 <label class="input" for="description"><fmt:message
                                         key="goal.create.description"/></label>
@@ -72,11 +77,22 @@
                                     <option value="1"><fmt:message key="goal.create.newType"/></option>
                                 </select>
                                 <br>
+                                <div class="row">
+                                    <div class="opp">.........</div>
+                                    <div class="form-group">
+                                        <button id="delete_type" value="delete_type" name="delete_type"
+                                                class="btn float-left btn-danger">
+                                            <fmt:message key="profile.delete"/>
+                                        </button>
+                                    </div>
+                                    <div class="opp">....................................................................................</div>
+                                    <div class="form-group">
+                                        <input type="submit" value="<fmt:message key="common.message.create"/>" class="btn float-right login_btn">
+                                    </div>
+                                </div>
 
                                 <form class="create_type" action="do?command=createGoal" method="POST">
                                     <div id="myModal" class="modal">
-
-
                                         <div class="modal" tabindex="-1" role="dialog">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -115,10 +131,6 @@
                                         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
                                         crossorigin="anonymous">
                                 </script>
-
-                                <div class="form-group">
-                                    <input type="submit" value="Создать" class="btn float-right login_btn">
-                                </div>
                             </form>
                         </div>
                     </div>

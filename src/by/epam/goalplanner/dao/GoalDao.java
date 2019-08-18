@@ -18,4 +18,7 @@ public interface GoalDao extends BaseDao<Goal> {
     boolean deleteWithUser(long id) throws DaoException;
 
     boolean deleteWithGoal(long id) throws DaoException;
+
+    boolean deleteWithType(long id) throws DaoException;
+
 }

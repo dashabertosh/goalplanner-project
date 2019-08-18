@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 html,body{
-    background-image: url(css/bg-image.jpg);
+    background-image: url(bg-image.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
@@ -19,6 +19,8 @@ footer {
 .desc{
     color: white;
 }
+
+
 
 .container{
     min-height: 100%;
@@ -45,10 +47,10 @@ footer {
 }
 
 .card{
-    height: 370px;
+    height: 200px;
     margin-top: auto;
     margin-bottom: auto;
-    width: 400px;
+    width: 900px;
     background-color: rgba(0,0,0,0.5) !important;
 }
 

@@ -44,6 +44,11 @@ public class GoalDaoImpl extends AbstractDao<Goal> implements GoalDao {
     }
 
     @Override
+    public boolean deleteWithType(long id) throws DaoException {
+        return executeUpdate(SqlConstant.DELETE_WITH_TYPE.getName(), id);
+    }
+
+    @Override
     public boolean deleteWithGoal(long id) throws DaoException {
         return executeUpdate(SqlConstant.DELETE_TASK_WITH_GOAL.getName(), id);
     }

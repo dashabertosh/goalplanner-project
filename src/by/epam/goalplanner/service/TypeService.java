@@ -10,9 +10,15 @@ import java.util.List;
 public interface TypeService {
     List<Type> findAll() throws ServiceException;
 
+    List<Type> findAll(long id) throws ServiceException;
+
     boolean create(String name) throws ServiceException;
 
+    boolean delete(long id) throws ServiceException;
+
     long findIdByName(String name) throws ServiceException;
+
+    List<Type> findSomeTypes() throws ServiceException;
 
     long findIdTypeById(long id) throws ServiceException;
 }

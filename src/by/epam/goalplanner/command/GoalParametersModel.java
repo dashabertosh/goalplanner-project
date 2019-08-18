@@ -7,12 +7,26 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * GoalParametersModel
+ *
+ * @author Dasha Lobkova on 2019-07-25.
+ * @version 0.0.1
+ */
+
 public class GoalParametersModel {
 
     private String name;
     private String description;
     private Date beginDate;
     private Date endDate;
+
+    /**
+     *
+     * @param req DTO containing all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link GoalParametersModel} that
+     * contains all parameters for create goal
+     */
 
     public static GoalParametersModel getParams(HttpServletRequest req) {
         GoalParametersModel model = new GoalParametersModel();

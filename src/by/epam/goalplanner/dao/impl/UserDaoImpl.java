@@ -18,7 +18,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public boolean create(String login, String password, String name) throws DaoException {
-        return executeUpdate(SqlConstant.CREATE_USER.getName(), login, password, name, 1.);
+        boolean create = executeUpdate(SqlConstant.CREATE_USER.getName(), login, password, name, 1.);
+        return create;
     }
     @Override
     public boolean delete(long id) throws DaoException {

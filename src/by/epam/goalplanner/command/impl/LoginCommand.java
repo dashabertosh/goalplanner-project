@@ -16,8 +16,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * AdminCommand page
+ *
+ * @author Dasha Lobkova on 2019-07-17.
+ * @version 0.0.1
+ */
 
 public class LoginCommand implements Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -29,6 +34,14 @@ public class LoginCommand implements Command {
         this.userService = userService;
     }
 
+    /**
+     *
+     * @param req DTO containing all data received with {@link javax.servlet.http.HttpServletRequest}
+     * @return instance of {@link ResultCommand} that
+     * forward to {@link LoginCommand}.PAGE
+     *
+     * @throws CommandException
+     */
     @Override
     public ResultCommand execute(HttpServletRequest req) throws CommandException {
         ResultCommand result;
