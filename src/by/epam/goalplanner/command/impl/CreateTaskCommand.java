@@ -56,7 +56,7 @@ public class CreateTaskCommand implements Command {
                 LOGGER.debug("Command " + PAGE + "  began to execute.");
                 String goalName = req.getParameter(DbConstant.NAME_GOAL.getName());
                 if (goalName.equalsIgnoreCase("1")) {
-                    result = new ResultCommand(VariableConstant.CREATE_GOAL_JSP.getName(), true);
+                    result = new ResultCommand(VariableConstant.DO_COMMAND_CREATE_GOAL.getName(), false);
                     return result;
                 }
                 String name = req.getParameter(DbConstant.NAME.getName());
