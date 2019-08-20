@@ -3,13 +3,6 @@ package by.epam.goalplanner.command;
 import by.epam.goalplanner.command.impl.*;
 import by.epam.goalplanner.service.*;
 
-/**
- * FactoryCommand page
- *
- * @author Dasha Lobkova on 2019-07-18.
- * @version 0.0.1
- */
-
 public class FactoryCommand {
     private final static FactoryCommand FACTORY_CMD = new FactoryCommand();
 
@@ -20,18 +13,11 @@ public class FactoryCommand {
         return FACTORY_CMD;
     }
 
-    /**
-     *
-     * @param cmd name of command
-     * @return instance of {@link Command} by command name
-     */
-
     public Command create(String cmd) {
         ServiceFactory serviceFactory = ServiceFactory.getInstance();
         Command command;
         if (cmd == null) {
-            UserService userService = serviceFactory.createUserService();
-            return new LoginCommand(userService);
+            return new IndexCommand();
         }
         switch (cmd) {
             case LoginCommand.PAGE: {
@@ -77,8 +63,7 @@ public class FactoryCommand {
                 break;
             }
             default: {
-                UserService userService = serviceFactory.createUserService();
-                return new LoginCommand(userService);
+                return new IndexCommand();
             }
         }
         return command;

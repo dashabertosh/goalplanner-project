@@ -12,5 +12,5 @@ public interface TypeDao extends BaseDao<Type> {
 
     List<Type> findSomeTypes() throws DaoException;
 
-    long findIdTypeById(long id) throws DaoException;
+    List<Type> findIdTypeById(long id) throws DaoException;
 }

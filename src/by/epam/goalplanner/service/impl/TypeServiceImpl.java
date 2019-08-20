@@ -75,7 +75,7 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
-    public long findIdTypeById(long id) throws ServiceException {
+    public List<Type> findIdTypeById(long id) throws ServiceException {
         try {
             return typeDao.findIdTypeById(id);
         } catch (DaoException e) {

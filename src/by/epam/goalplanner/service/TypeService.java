@@ -20,5 +20,5 @@ public interface TypeService {
 
     List<Type> findSomeTypes() throws ServiceException;
 
-    long findIdTypeById(long id) throws ServiceException;
+    List<Type> findIdTypeById(long id) throws ServiceException;
 }

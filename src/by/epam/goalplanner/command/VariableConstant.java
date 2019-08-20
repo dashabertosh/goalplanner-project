@@ -5,6 +5,7 @@ public enum  VariableConstant {
     COMMAND("command"),
     MESSAGE("message"),
     CREATE_NEW_TYPE("Create a new category"),
+    HOME("index.jsp"),
     CREATE_NEW_TYPE_RU("Создать новую категорию"),
     CREATE_NEW_GOAL("Create a new goal"),
     CREATE_NEW_GOAL_RU("Создать новую цель"),

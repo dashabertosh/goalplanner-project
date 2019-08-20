@@ -2,6 +2,7 @@ package by.epam.goalplanner.command.impl;
 
 import by.epam.goalplanner.beans.Goal;
 import by.epam.goalplanner.beans.Task;
+import by.epam.goalplanner.beans.Type;
 import by.epam.goalplanner.command.Command;
 import by.epam.goalplanner.command.GoalParametersModel;
 import by.epam.goalplanner.command.VerificationUser;
@@ -63,7 +64,7 @@ public class ProfileCommand implements Command {
                     long id = Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName()));
                     GoalParametersModel model = GoalParametersModel.getParams(req);
                     long userId = (VerificationUser.findUser(req)).getId();
-                    long typeId = typeService.findIdTypeById(Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName())));
+                    long typeId = (typeService.findIdTypeById(Long.parseLong(req.getParameter(DbConstant.ID_GOAL.getName()))).get(0).getId());
 
                     XssProtection protection = XssProtection.profileProtection(model.getName(), model.getDescription());
                     String message = Validator.validateProfile(model.getName(), model.getDescription(), model.getBeginDate(), model.getEndDate());

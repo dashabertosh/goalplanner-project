@@ -35,9 +35,9 @@ public class TypeDaoImpl extends AbstractDao<Type> implements TypeDao {
     }
 
     @Override
-    public long findIdTypeById(long id) throws DaoException {
+    public List<Type> findIdTypeById(long id) throws DaoException {
         List<Type> type = executeQuery(SqlConstant.SELECT_TYPE_BY_ID.getName(), id);
-        return type.get(0).getId();
+        return type;
     }
 
     @Override
