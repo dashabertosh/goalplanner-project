@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html,body{
+    background-image: url(bg-image.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Roboto', fantasy;
+}
+
+.container{
+    min-height: 100%;
+    position: relative;
+    align-content: center;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    color: white;
+}
+
+.lang-change{
+    background: #FFC312; /* Цвет фона */
+    border: 1px solid #7a7b7e; /* Параметры рамки */
+    width: 30px; /* Ширина кнопки */
+    height: 30px; /* Высота */
+    align-content: center;
+    border-radius: 30px;
+}
+
+.row{
+    font-family: 'Roboto', fantasy;
+    color: white;
+}
+
+.page-header{
+    color: white;
+}
+
+.input{
+    color: white;
+}
+
+.card{
+    height: 610px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 600px;
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.card-header h3{
+    color: white;
+}
+
+.input-group-prepend span{
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border:0 !important;
+}
+
+input:focus{
+    box-shadow: 0 0 0 0 !important;
+
+}
+
+.language{
+    float: right;
+}
+
+.remember{
+    color: white;
+}
+
+.remember input
+{
+    width: 20px;
+    height: 20px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+
+.login_btn{
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+    text-align: center;
+}
+
+.login_btn:hover{
+    color: black;
+    background-color: white;
+}
+
+.links{
+    color: white;
+}
+
+.links a{
+    margin-left: 4px;
+}
